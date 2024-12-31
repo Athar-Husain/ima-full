@@ -52,7 +52,7 @@ const AppliedMembers = () => {
 
   const handleViewDetails = (id) => {
     // Navigate to the member's detail page using the member's ID
-    navigate(`/view-member/${id}`);
+    navigate(`/applied-member/${id}`);
   };
 
   if (isLoading) return <CircularProgress />;

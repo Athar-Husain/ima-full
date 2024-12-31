@@ -27,7 +27,9 @@ const CreateStateBranch = Loadable(lazy(() => import('views/state/create-state-b
 const LocalViewBranches = Loadable(lazy(() => import('views/Local/local-view-branches')));
 const LocalEditMembers = Loadable(lazy(() => import('views/Local/local-edit-members')));
 const CreateLocalBranch = Loadable(lazy(() => import('views/Local/create-local-branch')));
-const MemberApplication = Loadable(lazy(() => import('views/view-members-form')));
+const MemberApplication = Loadable(lazy(() => import('views/view-membersDetails')));
+const AppliedMemberDetails = Loadable(lazy(() => import('views/applied-membersDetails')));
+
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -60,6 +62,10 @@ const MainRoutes = {
     {
       path: 'view-member/:id',
       element: <ViewMemberDetails />
+    },
+    {
+      path: 'applied-member/:id',
+      element: <AppliedMemberDetails/>
     },
 
     {
