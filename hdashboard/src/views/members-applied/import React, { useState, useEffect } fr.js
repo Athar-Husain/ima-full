@@ -23,7 +23,6 @@ const ViewMemberDetails = () => {
     streetAddress: '',
     cityAddress: '',
     stateAddress: '',
-    pinCode:'',
     landlineNo: '',
     mobileNo: '',
     email: '',
@@ -44,7 +43,6 @@ const ViewMemberDetails = () => {
         streetAddress: memberdata.address?.street || '',
         cityAddress: memberdata.address?.city || '',
         stateAddress: memberdata.address?.state || '',
-        pinCode:memberdata.address?.pinCode || '',
         landlineNo: memberdata.contact?.landline || '',
         mobileNo: memberdata.contact?.mobile || '',
         email: memberdata.contact?.email || '',
@@ -98,7 +96,7 @@ const ViewMemberDetails = () => {
   if (isError) return <Typography>Error loading data</Typography>;
 
   return (
-    <MainCard title="View Member">
+    <MainCard title="Applied Form">
       <Box component="form" noValidate sx={{ padding: 2 }} onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           {/* Basic Information */}
@@ -126,7 +124,7 @@ const ViewMemberDetails = () => {
               <Select name="gender" value={formData.gender} onChange={handleInputChange}>
                 <MenuItem value="Male">Male</MenuItem>
                 <MenuItem value="Female">Female</MenuItem>
-                
+                <MenuItem value="Unknown">Unknown</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -139,16 +137,8 @@ const ViewMemberDetails = () => {
               onChange={handleInputChange}
             />
           </Grid>
-         
           <Grid item xs={12} sm={6}>
-            <TextField
-              label="State "
-              fullWidth
-              required
-              name="State Address"
-              value={formData.stateAddress}
-              onChange={handleInputChange}
-            />
+            <TextField label="Street Address" fullWidth name="streetAddress" value={formData.streetAddress} onChange={handleInputChange} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -159,12 +149,6 @@ const ViewMemberDetails = () => {
               value={formData.cityAddress}
               onChange={handleInputChange}
             />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField label="Street Address" fullWidth name="streetAddress" value={formData.streetAddress} onChange={handleInputChange} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField label="Pin Code" fullWidth name="Pin Code" value={formData.pinCode} onChange={handleInputChange} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField label="Landline No" fullWidth name="landlineNo" value={formData.landlineNo} onChange={handleInputChange} />
@@ -194,7 +178,7 @@ const ViewMemberDetails = () => {
         </Grid>
 
         {/* Qualifications Section */}
-        <Box sx={{ mt: 4 , marginTop:"50px" }}>
+        <Box sx={{ mt: 4 }}>
           <Typography variant="h4" gutterBottom>
             Qualifications
           </Typography>
@@ -226,7 +210,9 @@ const ViewMemberDetails = () => {
               </Grid>
             </Grid>
           ))}
-          
+          <Button variant="outlined" onClick={addQualification} sx={{ mt: 2 }}>
+            Add Qualification
+          </Button>
         </Box>
 
         {/* Experience Section */}
@@ -262,54 +248,14 @@ const ViewMemberDetails = () => {
               </Grid>
             </Grid>
           ))}
-             </Box>
-             <Box sx={{ mt: 4 , marginTop:"50px"}}>
-        <Typography variant="h4" gutterBottom>
-          Personal Details
-        </Typography>
-        <Grid container spacing={4}>
-          <Grid item xs={4} sm={4}>
-            <Typography variant="body1" gutterBottom>
-              View Photo
-            </Typography>
-            <Button
-              variant="contained"
-              component="label"
-            >
-              View Photo
-             
-            </Button>
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <Typography variant="body1" gutterBottom>
-              View Signature
-            </Typography>
-            <Button
-              variant="contained"
-              component="label"
-            >
-              View Signature
-              
-            </Button>
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <Typography variant="body1" gutterBottom>
-              View Documents
-            </Typography>
-            <Button
-              variant="contained"
-              component="label"
-            >
-              View Documents
-             
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
+          <Button variant="outlined" onClick={addExperience} sx={{ mt: 2 }}>
+            Add Experience
+          </Button>
+        </Box>
 
         {/* Submit Button */}
-        <Button type="submit" variant="contained" color="success" fullWidth sx={{ mt: 4 , marginTop:"50px" }}>
-          Update Member
+        <Button type="submit" variant="contained" color="success" fullWidth sx={{ mt: 4 }}>
+          Update Profile
         </Button>
       </Box>
     </MainCard>

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { TextField, Button, Grid, Box, Snackbar, Alert, MenuItem, Checkbox, FormControlLabel,Typography } from '@mui/material';
+import { TextField, Button, Grid, Box, Snackbar, Alert, MenuItem, Checkbox, FormControlLabel } from '@mui/material';
 import { FormControl } from '@mui/material';
 import { InputLabel } from '@mui/material';
 import { Select } from '@mui/material';
@@ -78,57 +78,15 @@ const AddMember = () => {
       }
     }
   });
-  const [qualifications, setQualifications] = useState([
-    { degree: "", university: "", year: "" },
-  ]);
-  const [experiences, setExperiences] = useState([
-    { designation: "", institution: "", period: "" },
-  ]);
+
   const [snackbar, setSnackbar] = React.useState({
     open: false,
     message: '',
     severity: 'success'
   });
-  
-  const addQualification = () => {
-    setQualifications([
-      ...qualifications,
-      { degree: "", university: "", year: "" },
-    ]);
-  };
-
-  const addExperience = () => {
-    setExperiences([
-      ...experiences,
-      { designation: "", institution: "", period: "" },
-    ]);
-  };
 
   const handleSnackbarClose = () => {
     setSnackbar({ ...snackbar, open: false });
-  };
-
-  const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    const errorElement = document.getElementById("fileError");
-    errorElement.textContent = ""; // Clear previous errors
-
-    // Validate file count
-    if (files.length > 5) {
-      errorElement.textContent = "You can only upload a maximum of 5 files.";
-      e.target.value = ""; // Clear the input
-      return;
-    }
-
-    // Validate file size
-    const isValidSize = files.every((file) => file.size <= 5 * 1024 * 1024); // 5 MB
-    if (!isValidSize) {
-      errorElement.textContent = "File must be less than 5 MB.";
-      e.target.value = ""; // Clear the input
-      return;
-    }
-
-    console.log("Files selected:", files);
   };
 
   const onSubmit = (data) => {
@@ -409,7 +367,45 @@ const AddMember = () => {
             />
           </Grid>
 
-          
+          {/* Membership Applied Date */}
+          <Grid item xs={6} sm={4}>
+            <Controller
+              name="mappliedDate"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="Membership Applied Date"
+                  type="date"
+                  InputLabelProps={{ shrink: true }}
+                  error={!!errors.mappliedDate}
+                  helperText={errors.mappliedDate?.message}
+                  variant="outlined"
+                />
+              )}
+            />
+          </Grid>
+
+          {/* Membership Date */}
+          <Grid item xs={6} sm={4}>
+            <Controller
+              name="membershipDate"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="Membership Date"
+                  type="date"
+                  InputLabelProps={{ shrink: true }}
+                  error={!!errors.membershipDate}
+                  helperText={errors.membershipDate?.message}
+                  variant="outlined"
+                />
+              )}
+            />
+          </Grid>
 
           {/* State Branch */}
           <Grid item xs={6} sm={4}>
@@ -429,32 +425,106 @@ const AddMember = () => {
             />
           </Grid>
 
-          
-
-          
-
-          {/* Local Branch  */}
+          {/* State Branch Count */}
           <Grid item xs={6} sm={4}>
             <Controller
-              name="localBranch"
+              name="stateBranchCount"
               control={control}
               render={({ field }) => (
                 <TextField
-                {...field}
-                fullWidth
-                label="Local Branch"
-                error={!!errors.localbranch}
-                helperText={errors.localbranch?.message}
-                variant="outlined"
-              />
+                  {...field}
+                  fullWidth
+                  label="State Branch Count"
+                  type="number"
+                  error={!!errors.stateBranchCount}
+                  helperText={errors.stateBranchCount?.message}
+                  variant="outlined"
+                />
               )}
             />
           </Grid>
 
-       
-         
+          {/* Local Branch Code */}
+          <Grid item xs={6} sm={4}>
+            <Controller
+              name="localBranchCode"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="Local Branch Code"
+                  error={!!errors.localBranchCode}
+                  helperText={errors.localBranchCode?.message}
+                  variant="outlined"
+                />
+              )}
+            />
+          </Grid>
 
-          
+          {/* Local Branch Count */}
+          <Grid item xs={6} sm={4}>
+            <Controller
+              name="localBranchCount"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="Local Branch Count"
+                  type="number"
+                  error={!!errors.localBranchCount}
+                  helperText={errors.localBranchCount?.message}
+                  variant="outlined"
+                />
+              )}
+            />
+          </Grid>
+
+          {/* LMORAM */}
+          <Grid item xs={6} sm={4}>
+            <Controller
+              name="lmoram"
+              control={control}
+              render={({ field }) => (
+                <FormControl fullWidth>
+                  <InputLabel>LMORAM</InputLabel>
+                  <Select {...field} label="LMORAM">
+                    <MenuItem value="L">L</MenuItem>
+                    <MenuItem value="A">A</MenuItem>
+                  </Select>
+                </FormControl>
+              )}
+            />
+          </Grid>
+
+          {/* Is Fellow */}
+          <Grid item xs={6} sm={4}>
+            <Controller
+              name="isFellow"
+              control={control}
+              render={({ field }) => <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Is Fellow" />}
+            />
+          </Grid>
+
+          {/* Fellow Year */}
+          <Grid item xs={6} sm={4}>
+            <Controller
+              name="fellowYear"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="Fellow Year"
+                  type="number"
+                  error={!!errors.fellowYear}
+                  helperText={errors.fellowYear?.message}
+                  variant="outlined"
+                />
+              )}
+            />
+          </Grid>
 
           {/* Specialty */}
           <Grid item xs={6} sm={4}>
@@ -492,122 +562,90 @@ const AddMember = () => {
             />
           </Grid>
 
-          <Box>
-      {/* Qualification Section */}
-      <Typography variant="h5" className="mt-4">Qualifications</Typography>
-      {qualifications.map((qualification, index) => (
-        <Grid container spacing={2} key={index} className="mb-3">
-          <Grid item xs={12} md={4}>
-            <TextField
-              fullWidth
-              label="Degree/Diploma"
-              name={`degree[${index}]`}
-              variant="outlined"
+          {/* State Name */}
+          <Grid item xs={6} sm={4}>
+            <Controller
+              name="stateName"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="State Name"
+                  error={!!errors.stateName}
+                  helperText={errors.stateName?.message}
+                  variant="outlined"
+                />
+              )}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <TextField
-              fullWidth
-              label="University/Institution"
-              name={`university[${index}]`}
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <TextField
-              fullWidth
-              label="Year Obtained"
-              name={`year[${index}]`}
-              variant="outlined"
-            />
-          </Grid>
-        </Grid>
-      ))}
-      <Button variant="contained" color="secondary" className="mb-3" onClick={addQualification}>
-        Add Qualification
-      </Button>
 
-      {/* Experience Section */}
-      <Typography variant="h5" className="mt-4">Experience</Typography>
-      {experiences.map((experience, index) => (
-        <Grid container spacing={2} key={index} className="mb-3">
-          <Grid item xs={12} md={4}>
-            <TextField
-              fullWidth
-              label="Designation"
-              name={`designation[${index}]`}
-              variant="outlined"
+          {/* State Code */}
+          <Grid item xs={6} sm={4}>
+            <Controller
+              name="stateCode"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="State Code"
+                  error={!!errors.stateCode}
+                  helperText={errors.stateCode?.message}
+                  variant="outlined"
+                />
+              )}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <TextField
-              fullWidth
-              label="Institution"
-              name={`institution[${index}]`}
-              variant="outlined"
+
+          {/* Status */}
+          <Grid item xs={6} sm={4}>
+            <Controller
+              name="status"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="Status"
+                  error={!!errors.status}
+                  helperText={errors.status?.message}
+                  variant="outlined"
+                />
+              )}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <TextField
-              fullWidth
-              label="Period (From-To)"
-              name={`period[${index}]`}
-              variant="outlined"
+
+          {/* Headquarter Approval */}
+          <Grid item xs={6} sm={4}>
+            <Controller
+              name="hqApproval"
+              control={control}
+              render={({ field }) => (
+                <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Headquarter Approval" />
+              )}
             />
           </Grid>
-        </Grid>
-      ))}
-      <Button variant="contained" color="secondary" className="mb-3" onClick={addExperience}>
-        Add Experience
-      </Button>
 
-      {/* File Upload Section */}
-      <Typography variant="h5" className="mt-4">Uploads</Typography>
-      <Box className="mb-3">
-        <Typography htmlFor="photo" component="label">
-          Upload Photo
-        </Typography>
-        <TextField
-          fullWidth
-          type="file"
-          id="photo"
-          name="photo"
-          inputProps={{ accept: 'image/*' }}
-        />
-      </Box>
-      <Box className="mb-3">
-        <Typography htmlFor="documents" component="label">
-          Upload Documents
-        </Typography>
-        <TextField
-          fullWidth
-          type="file"
-          id="documents"
-          name="documents[]"
-          inputProps={{ multiple: true }}
-          onChange={handleFileChange}
-        />
-        <Typography color="error" id="fileError" variant="body2"></Typography>
-      </Box>
+          {/* State Approval */}
+          <Grid item xs={6} sm={4}>
+            <Controller
+              name="stateApproval"
+              control={control}
+              render={({ field }) => <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="State Approval" />}
+            />
+          </Grid>
 
-      {/* Signature Section */}
-      <Box className="mb-3">
-        <Typography htmlFor="signature" component="label">
-          Signature
-        </Typography>
-        <TextField
-          fullWidth
-          type="file"
-          id="signature"
-          name="signature"
-          inputProps={{ accept: 'image/*' }}
-        />
-      </Box>
-    </Box>
-          
-
-          
-
+          {/* Local Branch Approval */}
+          <Grid item xs={6} sm={4}>
+            <Controller
+              name="localBranchApproval"
+              control={control}
+              render={({ field }) => (
+                <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label="Local Branch Approval" />
+              )}
+            />
+          </Grid>
         </Grid>
         <Box mt={3} display="flex" justifyContent="flex-start" gap={2}>
           <Button variant="contained" type="submit" size="large" sx={{paddingLeft:8, paddingRight:8, paddingTop:1.5, paddingBottom:1.5,color:"white",backgroundColor: "#35b181",fontSize:"16px", '&:hover': { backgroundColor: '#27a059', }}}>

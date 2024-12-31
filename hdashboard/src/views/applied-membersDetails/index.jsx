@@ -5,7 +5,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import { useParams } from 'react-router-dom';
 import { getMemberData } from '../../redux/features/auth/memberSlice';
 
-const ViewMemberDetails = () => {
+const AppliedMemberDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   console.log('params id ', id);
@@ -27,6 +27,7 @@ const ViewMemberDetails = () => {
     landlineNo: '',
     mobileNo: '',
     email: '',
+    mappliedDate:'',
     stateBranch: '',
     localBranch: '',
     memberId: '',
@@ -48,6 +49,7 @@ const ViewMemberDetails = () => {
         landlineNo: memberdata.contact?.landline || '',
         mobileNo: memberdata.contact?.mobile || '',
         email: memberdata.contact?.email || '',
+        mappliedDate:memberdata.membershipDetails?.mappliedDate || '',
         stateBranch: memberdata.membershipDetails?.stateBranchName || '',
         localBranch: memberdata.membershipDetails?.localBranchName || '',
         memberId: memberdata.membershipDetails?.memberid || '',
@@ -98,7 +100,7 @@ const ViewMemberDetails = () => {
   if (isError) return <Typography>Error loading data</Typography>;
 
   return (
-    <MainCard title="View Member">
+    <MainCard title="Applied Form">
       <Box component="form" noValidate sx={{ padding: 2 }} onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           {/* Basic Information */}
@@ -188,14 +190,28 @@ const ViewMemberDetails = () => {
               onChange={handleInputChange}
             />
           </Grid>
-          <Grid item xs={12}>
-            <TextField label="UTR Number" fullWidth required name="utrNumber" value={formData.utrNumber} onChange={handleInputChange} />
+          
+          <Grid item xs={12} sm={6}>
+            <TextField label="UTR Number" fullWidth  name="utrNumber" value={formData.utrNumber} onChange={handleInputChange} />
           </Grid>
+          <Grid item xs={12} sm={6}>
+  <TextField
+    name="mappliedDate"
+    label="Membership Applied Date"
+    type="date"
+    fullWidth 
+    variant="outlined"
+    value={formData.mappliedDate}
+    
+  />
+</Grid>
         </Grid>
 
-        {/* Qualifications Section */}
-        <Box sx={{ mt: 4 , marginTop:"50px" }}>
-          <Typography variant="h4" gutterBottom>
+
+
+                  {/* Qualifications Section */}
+        <Box sx={{ mt: 4}}>
+          <Typography variant="h4" gutterBottom sx={{ mb:2 }}>
             Qualifications
           </Typography>
           {formData.qualifications.map((qualification, index) => (
@@ -231,7 +247,7 @@ const ViewMemberDetails = () => {
 
         {/* Experience Section */}
         <Box sx={{ mt: 4 }}>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom sx={{ mb:2 }}>
             Experience
           </Typography>
           {formData.experiences.map((experience, index) => (
@@ -262,58 +278,62 @@ const ViewMemberDetails = () => {
               </Grid>
             </Grid>
           ))}
-             </Box>
-             <Box sx={{ mt: 4 , marginTop:"50px"}}>
-        <Typography variant="h4" gutterBottom>
-          Personal Details
-        </Typography>
-        <Grid container spacing={4}>
-          <Grid item xs={4} sm={4}>
-            <Typography variant="body1" gutterBottom>
-              View Photo
-            </Typography>
-            <Button
-              variant="contained"
-              component="label"
-            >
-              View Photo
-             
-            </Button>
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <Typography variant="body1" gutterBottom>
-              View Signature
-            </Typography>
-            <Button
-              variant="contained"
-              component="label"
-            >
-              View Signature
-              
-            </Button>
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <Typography variant="body1" gutterBottom>
-              View Documents
-            </Typography>
-            <Button
-              variant="contained"
-              component="label"
-            >
-              View Documents
-             
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
+
+        
+        </Box>
+
+        
+                     <Box sx={{ mt: 4 }}>
+                <Typography variant="h4" gutterBottom>
+                  Personal Details
+                </Typography>
+                <Grid container spacing={4}  >
+                  <Grid item xs={4} sm={4} >
+                    <Typography variant="body1" gutterBottom>
+                      View Photo
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      component="label"
+                    >
+                      View Photo
+                     
+                    </Button>
+                  </Grid>
+                  <Grid item xs={4} sm={4}>
+                    <Typography variant="body1" gutterBottom>
+                      View Signature
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      component="label"
+                    >
+                      View Signature
+                      
+                    </Button>
+                  </Grid>
+                  <Grid item xs={4} sm={4}>
+                    <Typography variant="body1" gutterBottom>
+                      View Documents
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      component="label"
+                    >
+                      View Documents
+                     
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Box>
 
         {/* Submit Button */}
-        <Button type="submit" variant="contained" color="success" fullWidth sx={{ mt: 4 , marginTop:"50px" }}>
-          Update Member
+        <Button type="submit" variant="contained" color="success" fullWidth sx={{ mt: 4 }}>
+          Update Profile
         </Button>
       </Box>
     </MainCard>
   );
 };
 
-export default ViewMemberDetails;
+export default AppliedMemberDetails;
