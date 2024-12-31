@@ -18,7 +18,7 @@
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
-:root { 
+:root {
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
   --default-color: #444444; /* Default color used for the majority of the text content across the entire website */
   --heading-color: #37423b; /* Color for headings, subheadings and title throughout the website */
@@ -31,7 +31,7 @@
 :root {
   --nav-font: "Inter", sans-serif; /* Use Inter for navigation as well */
 
-  --nav-color: #272828;  /* The default color of the main navmenu links */
+  --nav-color: #272828; /* The default color of the main navmenu links */
   --nav-hover-color: #32a153; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
@@ -53,7 +53,6 @@
   --surface-color: #252525;
   --contrast-color: #ffffff;
 }
-
 
 /* Smooth scroll */
 :root {
@@ -147,7 +146,10 @@ h6 {
 .pulsating-play-btn {
   width: 94px;
   height: 94px;
-  background: radial-gradient(var(--accent-color) 50%, color-mix(in srgb, var(--accent-color), transparent 75%) 52%);
+  background: radial-gradient(
+    var(--accent-color) 50%,
+    color-mix(in srgb, var(--accent-color), transparent 75%) 52%
+  );
   border-radius: 50%;
   display: block;
   position: relative;
@@ -238,7 +240,6 @@ h6 {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
 .header-logo {
   height: 120px; /* Adjust for optimal logo size */
   width: auto; /* Maintain aspect ratio */
@@ -249,10 +250,8 @@ h6 {
 @media (max-width: 768px) {
   .header-logo {
     margin-left: -30px !important; /* Stretch to full width */
-    
   }
 }
-
 
 .header .logo h1 {
   font-weight: 700;
@@ -300,7 +299,6 @@ h6 {
   box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
 }
 
-
 /* Login Button Styles */
 .login-button-container {
   margin-left: 5px;
@@ -328,7 +326,6 @@ h6 {
   color: white !important;
 }
 
-
 .login-container {
   background: #f8f9fa;
   height: auto;
@@ -344,7 +341,6 @@ h6 {
   padding: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-
 }
 
 .login-card:hover {
@@ -375,7 +371,6 @@ h6 {
   color: #666;
   margin-bottom: 20px;
 }
-
 
 @media (max-width: 768px) {
   .login-card {
@@ -446,7 +441,6 @@ h6 {
 .hq-forgot-password {
   color: #6c757d;
   font-size: 14px;
-
 }
 
 .hq-forgot-password-container {
@@ -461,7 +455,6 @@ h6 {
 .hq-forgot-password:hover {
   color: #343a40;
   text-decoration: underline;
-  
 }
 
 /* Container Styling for Full Width */
@@ -473,7 +466,6 @@ h6 {
   background-color: #f8f9fa; /* Light background */
   padding: 20px; /* Padding for mobile responsiveness */
   box-sizing: border-box;
-  
 }
 
 /* Card Styling for Full-Width Form */
@@ -528,11 +520,6 @@ h6 {
   }
 }
 
-
-
-
-
-
 .btn-block {
   display: block;
   width: 100%; /* Ensures the button takes the full width */
@@ -542,14 +529,12 @@ h6 {
   border-radius: 5px;
   padding-top: 10px !important;
   padding-bottom: 10px !important;
-  background: linear-gradient(to right,green, red);
+  background: linear-gradient(to right, green, red);
   border: 1px solid rgb(0, 0, 0) !important;
-
 }
 .btn-block:hover {
-  background: linear-gradient(to right,red, green);
+  background: linear-gradient(to right, red, green);
   transition: 1s !important;
-
 }
 
 /*--------------------------------------------------------------
@@ -616,8 +601,6 @@ h6 {
     transition: 0.3s;
     background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
   }
-
- 
 }
 /* Header.css */
 .header {
@@ -642,14 +625,12 @@ h6 {
   color: #333;
 }
 
-
 .navmenu ul {
   display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
 }
-
 
 .navmenu ul li a {
   text-decoration: none;
@@ -666,7 +647,6 @@ h6 {
 .navmenu .active,
 .navmenu .active:focus {
   color: var(--nav-dropdown-hover-color);
-
 }
 
 .navmenu .dropdown:hover ul {
@@ -675,7 +655,7 @@ h6 {
 
 .navmenu.mobile-nav-active {
   position: fixed;
-  top:100px;
+  top: 100px;
   right: 0;
   width: 100%;
   height: calc(100% - 100px);
@@ -691,7 +671,6 @@ h6 {
   display: flex;
   flex-direction: column;
 }
-
 
 .mobile-nav-toggle {
   font-size: 24px;
@@ -749,7 +728,6 @@ h6 {
   background: #e9ecef; /* Subtle background change */
   color: #0056b3; /* Darker blue for hover */
 }
-
 
 /* Deep Dropdowns */
 .navmenu .dropdown .dropdown ul {
@@ -866,8 +844,6 @@ h6 {
     color: #333;
   }
 }
-
-
 
 /*--------------------------------------------------------------
 # Global Footer
@@ -988,7 +964,7 @@ h6 {
   border-color: var(--accent-color);
 }
 
-.footer .footer-newsletter .newsletter-form input[type=email] {
+.footer .footer-newsletter .newsletter-form input[type="email"] {
   border: 0;
   padding: 4px 8px;
   width: 100%;
@@ -996,11 +972,11 @@ h6 {
   color: var(--default-color);
 }
 
-.footer .footer-newsletter .newsletter-form input[type=email]:focus-visible {
+.footer .footer-newsletter .newsletter-form input[type="email"]:focus-visible {
   outline: none;
 }
 
-.footer .footer-newsletter .newsletter-form input[type=submit] {
+.footer .footer-newsletter .newsletter-form input[type="submit"] {
   border: 0;
   font-size: 16px;
   padding: 0 20px 2px 20px;
@@ -1011,7 +987,7 @@ h6 {
   border-radius: 50px;
 }
 
-.footer .footer-newsletter .newsletter-form input[type=submit]:hover {
+.footer .footer-newsletter .newsletter-form input[type="submit"]:hover {
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
 }
 
@@ -1030,7 +1006,7 @@ h6 {
   font-size: 14px;
 }
 
-.company{
+.company {
   color: #0a8a5d;
 }
 
@@ -1126,7 +1102,8 @@ h6 {
 
 .page-title .heading {
   padding: 80px 0;
-  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-top: 1px solid
+    color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 .page-title .heading h1 {
@@ -1152,11 +1129,11 @@ h6 {
   font-weight: 600;
 }
 
-.page-title nav ol li+li {
+.page-title nav ol li + li {
   padding-left: 10px;
 }
 
-.page-title nav ol li+li::before {
+.page-title nav ol li + li::before {
   content: "/";
   display: inline-block;
   padding-right: 10px;
@@ -1170,13 +1147,12 @@ section,
 .section {
   color: var(--default-color);
   background-color: var(--background-color);
-  padding: 60px 0;
+  /* padding: 0 0; */
   scroll-margin-top: 900px;
   overflow: clip;
 }
 
 @media (max-width: 1199px) {
-
   section,
   .section {
     scroll-margin-top: 66px;
@@ -1259,7 +1235,6 @@ section,
   color: #ffffff !important;
   outline: 1px solid #1e7c74;
 }
-
 
 .hero .welcome h2 {
   margin: 0;
@@ -1390,8 +1365,6 @@ section,
   justify-content: center;
   align-items: flex-end;
 }
-
-
 
 @media (max-width: 1200px) {
   .sitename {
@@ -1771,7 +1744,8 @@ section,
 
 .courses .trainer {
   padding-top: 15px;
-  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-top: 1px solid
+    color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 .courses .trainer .trainer-profile img {
@@ -1800,7 +1774,6 @@ section,
   font-size: 22px;
 }
 
-
 .members {
   padding: 40px 0;
 }
@@ -1820,7 +1793,7 @@ section,
 .member-card img {
   width: 230px !important;
   height: 190px !important;
-  object-fit: cover ;
+  object-fit: cover;
   border-radius: 10% !important;
   margin-bottom: 10px;
   border: 2px solid #ddd;
@@ -1856,7 +1829,7 @@ section,
   }
 }
 
-.members-heading{
+.members-heading {
   text-align: center;
 }
 
@@ -1932,7 +1905,8 @@ section,
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-  .table th, .table td {
+  .table th,
+  .table td {
     font-size: 0.9rem;
   }
 
@@ -2165,7 +2139,8 @@ section,
   transition: 0.3s;
   color: var(--default-color);
   border-radius: 0;
-  border-right: 2px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-right: 2px solid
+    color-mix(in srgb, var(--default-color), transparent 90%);
   font-weight: 600;
   font-size: 15px;
 }
@@ -2336,12 +2311,11 @@ section,
   display: flex;
   justify-content: center;
   align-items: center;
-    border: 5px solid #ddd;
-
+  border: 5px solid #ddd;
 }
 
 .scanner-image {
-  width: 90% ;
+  width: 90%;
   height: auto;
   max-width: 350px;
 }
@@ -2394,9 +2368,6 @@ section,
   position: relative;
 }
 
-
-
-
 /* Ensure all images in the gallery have the same dimensions */
 .card-img img {
   width: 100%;
@@ -2404,10 +2375,7 @@ section,
   object-fit: cover; /* This ensures the image maintains its aspect ratio */
   transform: scale(1.1);
   border-radius: 10px;
-
-
 }
-
 
 .events .card-body {
   z-index: 10;
@@ -2436,7 +2404,7 @@ section,
 
 .events .card:hover img {
   transform: scale(1.2);
-  transition: all 0.5s ease-in-out ;
+  transition: all 0.5s ease-in-out;
 }
 
 .events .card:hover .card-body {
@@ -2561,7 +2529,7 @@ section,
   padding-bottom: 40px;
 }
 
-.contact .info-item+.info-item {
+.contact .info-item + .info-item {
   margin-top: 40px;
 }
 
@@ -2596,31 +2564,35 @@ section,
   height: 100%;
 }
 
-.contact .php-email-form input[type=text],
-.contact .php-email-form input[type=email],
+.contact .php-email-form input[type="text"],
+.contact .php-email-form input[type="email"],
 .contact .php-email-form textarea {
   font-size: 14px;
   padding: 10px 15px;
   box-shadow: none;
   border-radius: 0;
   color: var(--default-color);
-  background-color: color-mix(in srgb, var(--background-color), transparent 50%);
+  background-color: color-mix(
+    in srgb,
+    var(--background-color),
+    transparent 50%
+  );
   border-color: color-mix(in srgb, var(--default-color), transparent 80%);
 }
 
-.contact .php-email-form input[type=text]:focus,
-.contact .php-email-form input[type=email]:focus,
+.contact .php-email-form input[type="text"]:focus,
+.contact .php-email-form input[type="email"]:focus,
 .contact .php-email-form textarea:focus {
   border-color: var(--accent-color);
 }
 
-.contact .php-email-form input[type=text]::placeholder,
-.contact .php-email-form input[type=email]::placeholder,
+.contact .php-email-form input[type="text"]::placeholder,
+.contact .php-email-form input[type="email"]::placeholder,
 .contact .php-email-form textarea::placeholder {
   color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
-.contact .php-email-form button[type=submit] {
+.contact .php-email-form button[type="submit"] {
   color: var(--contrast-color);
   background: var(--accent-color);
   border: 0;
@@ -2629,7 +2601,7 @@ section,
   border-radius: 50px;
 }
 
-.contact .php-email-form button[type=submit]:hover {
+.contact .php-email-form button[type="submit"]:hover {
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
 }
 
@@ -2643,15 +2615,13 @@ section,
 @media (max-width: 768px) {
   .sitename {
     margin-right: 20px !important; /* Stretch to full width */
-    
   }
 }
-
 
 .sitename {
   font-size: 2.3rem !important; /* Adjust font size as needed */
   font-weight: bold;
-  background: linear-gradient(to right,green, red);
+  background: linear-gradient(to right, green, red);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center; /* Center the text if needed */
@@ -2659,7 +2629,7 @@ section,
 .sitenames {
   font-size: 1rem !important; /* Adjust font size as needed */
   font-weight: bold;
-  background: linear-gradient(to right,green, red);
+  background: linear-gradient(to right, green, red);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center; /* Center the text if needed */
@@ -2668,12 +2638,11 @@ section,
 .sitenamef {
   font-size: 2rem !important; /* Adjust font size as needed */
   font-weight: bold;
-  background: linear-gradient(to right,green, red);
+  background: linear-gradient(to right, green, red);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center; /* Center the text if needed */
 }
-
 
 .download-section {
   background-color: #f9f9f9;
@@ -2700,7 +2669,7 @@ section,
 }
 
 .download-button {
-  background: linear-gradient(to right,green, rgb(255, 22, 22)) !important;
+  background: linear-gradient(to right, green, rgb(255, 22, 22)) !important;
   color: white !important;
   font-size: 1rem !important;
   padding: 0.5rem 1rem !important;
@@ -2708,11 +2677,11 @@ section,
   border-radius: 5px !important;
   transition: background-color 0.5s ease !important;
   box-shadow: 0 5px 50px rgba(0, 0, 0, 0.3) !important;
-  margin-top:  10px !important;
+  margin-top: 10px !important;
 }
 
 .download-button:hover {
-  background: linear-gradient(to right,red, green) !important;
+  background: linear-gradient(to right, red, green) !important;
 }
 
 @media (max-width: 768px) {
@@ -2725,17 +2694,16 @@ section,
   }
 }
 
-
 /* General styles for the certificate */
 .certificate {
   margin-top: 40px !important;
-  width: 100%;  /* Make the certificate take full width of the container */
-  max-width: 210mm;  /* Set max width to A4 size */
-  height: auto;  /* Let height adjust proportionally */
+  width: 100%; /* Make the certificate take full width of the container */
+  max-width: 210mm; /* Set max width to A4 size */
+  height: auto; /* Let height adjust proportionally */
   padding: 20px;
   position: relative;
   font-family: Arial, sans-serif;
-  border: 5px solid brown;  /* Brown border (instead of outline) */
+  border: 5px solid brown; /* Brown border (instead of outline) */
   text-align: center;
   margin: auto; /* Center horizontally */
 }
@@ -2744,8 +2712,8 @@ section,
 .certificate-logo {
   display: block;
   margin: 0 auto;
-  max-width: 80%;  /* Make the logo responsive */
-  max-height: 170px;  /* Keep a reasonable height for the logo */
+  max-width: 80%; /* Make the logo responsive */
+  max-height: 170px; /* Keep a reasonable height for the logo */
   object-fit: contain; /* Maintain aspect ratio */
 }
 
@@ -2754,8 +2722,6 @@ section,
   font-weight: bold;
   margin-top: 20px;
 }
-
-
 
 .certificate-header p {
   font-size: 1.5rem;
@@ -2775,7 +2741,7 @@ section,
 }
 
 .life-member {
-  font-size: 3rem;  /* Larger font for the title */
+  font-size: 3rem; /* Larger font for the title */
   font-weight: bold;
   color: rgb(136, 2, 2);
 }
@@ -2789,7 +2755,7 @@ section,
 }
 
 .signature img {
-  width: 100%;  /* Make signature image responsive */
+  width: 100%; /* Make signature image responsive */
   max-width: 150px;
   height: auto;
 }
@@ -2860,7 +2826,6 @@ section,
   }
 }
 
-
 .form-heading {
   display: flex;
   justify-content: space-between;
@@ -2900,6 +2865,6 @@ section,
     margin: 2px 0;
   }
 }
-.Breadcrumb-container{
-  background: linear-gradient(to right,green, rgb(246, 44, 44));
+.Breadcrumb-container {
+  background: linear-gradient(to right, green, rgb(246, 44, 44));
 }
