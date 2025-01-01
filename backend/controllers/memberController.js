@@ -361,10 +361,6 @@ const getAllMembers = asyncHandler(async (req, res) => {
 
     if (members && members.length > 0) {
       res.status(200).json(members);
-    } else {
-      res.status(404).json({
-        message: "No members found who are approved by all branches.",
-      });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -382,12 +378,16 @@ const getAppliedMembers = asyncHandler(async (req, res) => {
       ],
     });
 
-    if (members && members.length > 0) {
+    // if (members && members.length > 0) {
+    //   res.status(200).json(members);
+    // } else {
+    //   res.status(404).json({
+    //     message: "No members found who are not approved by all branches.",
+    //   });
+    // }
+
+    if (members) {
       res.status(200).json(members);
-    } else {
-      res.status(404).json({
-        message: "No members found who are not approved by all branches.",
-      });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -402,10 +402,7 @@ const getMemberData = asyncHandler(async (req, res) => {
     // If member found, send the member data as response
     if (member) {
       res.status(200).json(member);
-      console.log("memberData", member);
-    } else {
-      // If no member is found with the given ID, return 404
-      res.status(404).json({ message: "Member not found" });
+      // console.log("memberData", member);
     }
   } catch (error) {
     // Catch any error that occurs during the database query or processing

@@ -61,99 +61,17 @@ const CreateLocalBranch = () => {
     setValue // Set value for form fields
   } = useForm({ defaultValues });
 
-  // const onSubmit = async (data) => {
-  //   // Convert localbranchName to uppercase
-  //   const localbranchName = data.localbranchName.toUpperCase();
+  const onSubmit = async (data, e) => {
+    e.preventDefault(); // Prevent default form submission behavior
 
-  //   // Check if localbranchName already exists in the selected state
-  //   const stateData = stateBranches.find((branch) => branch._id === selectedState);
-  //   const existingBranch = stateData?.localbranches.find((branch) => branch.localbranchName.toUpperCase() === localbranchName);
-
-  //   if (existingBranch) {
-  //     alert('Local branch with the same name already exists.');
-  //     return; // Stop submission if branch name already exists
-  //   }
-
-  //   // Generate localbranchCode based on branch count
-  //   const localBranchCode = `${branchCount + 1}`;
-
-  //   // Add localBranchCode and update data for submission
-  //   const branchData = { ...data, localbranchName: localbranchName, localBranchCode };
-
-  //   const userData = {
-  //     ...branchData
-  //   };
-  //   // Make API call to create local branch (sending form data)
-  //   // const response = await fetch('/api/local-branches', {
-  //   //   method: 'POST',
-  //   //   headers: {
-  //   //     'Content-Type': 'application/json'
-  //   //   },
-  //   //   body: JSON.stringify(branchData)
-  //   // });
-
-  //   // if (response.ok) {
-  //   // Handle success (e.g., show a success message or redirect)
-  //   console.log('Local branch created successfully!', userData);
-  //   // } else {
-  //   //   // Handle failure (e.g., show an error message)
-  //   //   console.error('Failed to create local branch.');
-  //   // }
-  // };
-
-  // const onSubmit = async (data) => {
-  //   try {
-  //     // Convert localbranchName to uppercase
-  //     const localbranchName = data.localbranchName.toUpperCase();
-
-  //     // Check if localbranchName already exists in the selected state
-  //     const stateData = stateBranches.find((branch) => branch._id === selectedState);
-  //     const stateCode = stateBranches.find((branch) => branch.stateCode === selectedState);
-  //     const existingBranch = stateData?.localbranches.find((branch) => branch.localbranchName.toUpperCase() === localbranchName);
-
-  //     if (existingBranch) {
-  //       alert('Local branch with the same name already exists.');
-  //       return; // Stop submission if branch name already exists
-  //     }
-
-  //     // Generate localbranchCode based on branch count (If branchCount is not set, fallback to 0)
-  //     const localbranchCode = `${(stateData?.localbranches.length || 0) + 1}`;
-  //     const localuserId = stateCode + localbranchName + '@' + 'ima-ams.com';
-  //     // Prepare the data to be sent to the backend
-  //     const branchData = {
-  //       ...data,
-  //       localbranchName,
-  //       localbranchCode
-  //       // localBranchCode,
-  //       // stateBranchId: selectedState // Pass the state branch ID to associate with the new local branch
-  //     };
-
-  //     const userData = {
-  //       ...data,
-  //       localbranchName,
-  //       localbranchCode,
-  //       localuserId
-  //       // stateBranchId: selectedState
-  //     };
-
-  //     console.log('user data in c local branch', userData);
-  //   } catch (error) {
-  //     console.log('error Adding Local branch', error.message);
-  //     throw error.message;
-  //   }
-  // };
-
-  const onSubmit = async (data) => {
     try {
-      // Convert localbranchName to uppercase, trim spaces and replace internal spaces with hyphen
       let localbranchName = data.localbranchName
         .trim() // Trim any leading or trailing spaces
         .toUpperCase() // Convert to uppercase
         .replace(/\s+/g, '-'); // Replace spaces with hyphen
 
-      console.log('Transformed localbranchName:', localbranchName); // For debugging
+      // console.log('Transformed localbranchName:', localbranchName); // For debugging
 
-      // Find the selected state branch based on selectedState
       const stateData = stateBranches.find((branch) => branch._id === selectedState);
 
       if (!stateData) {
@@ -181,7 +99,6 @@ const CreateLocalBranch = () => {
       const localuserId = `${stateCode}#${localbranchName}@ima-ams.com`; // Corrected localuserId format
 
       // Prepare the data to be sent to the backend
-
       const userData = {
         ...data,
         localbranchName,
@@ -189,9 +106,16 @@ const CreateLocalBranch = () => {
         localuserId // Corrected localuserId
       };
 
-      dispatch(addLocalBranch(userData));
+      // Dispatch the action to add the local branch
+      await dispatch(addLocalBranch(userData));
+
+      // Reset the form after successful submission
+      reset(); // This resets the form fields to the default values
 
       console.log('user data in create local branch', userData);
+
+      // Optionally, you can show a success message or perform additional actions
+      alert('Local branch added successfully!');
     } catch (error) {
       console.log('Error adding local branch:', error.message);
     }
