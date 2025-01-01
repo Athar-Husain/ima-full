@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { Grid, TextField, MenuItem, Select, FormControl, InputLabel, Button, Typography, Box, CircularProgress } from '@mui/material';
+import { Typography, Table, TableBody, TableCell, TableContainer, TableRow, Paper, Button, Box, CircularProgress } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 import { useParams } from 'react-router-dom';
 import { getMemberData } from '../../redux/features/auth/memberSlice';
@@ -8,13 +10,10 @@ import { getMemberData } from '../../redux/features/auth/memberSlice';
 const ViewMemberDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  console.log('params id ', id);
 
   const { memberdata, isLoading, isError } = useSelector((state) => state.member);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(getMemberData(id));
-  }, [dispatch, id]);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -23,7 +22,7 @@ const ViewMemberDetails = () => {
     streetAddress: '',
     cityAddress: '',
     stateAddress: '',
-    pinCode:'',
+    pinCode: '',
     landlineNo: '',
     mobileNo: '',
     email: '',
@@ -32,8 +31,15 @@ const ViewMemberDetails = () => {
     memberId: '',
     fellowYear: '',
     qualifications: [],
-    experiences: []
+    experiences: [],
+    dateOfBirth: '',
+    fatherOrHusbandName: '',
+    utrNumber: '',
   });
+
+  useEffect(() => {
+    dispatch(getMemberData(id));
+  }, [dispatch, id]);
 
   useEffect(() => {
     if (memberdata) {
@@ -44,7 +50,7 @@ const ViewMemberDetails = () => {
         streetAddress: memberdata.address?.street || '',
         cityAddress: memberdata.address?.city || '',
         stateAddress: memberdata.address?.state || '',
-        pinCode:memberdata.address?.pinCode || '',
+        pinCode: memberdata.address?.pinCode || '',
         landlineNo: memberdata.contact?.landline || '',
         mobileNo: memberdata.contact?.mobile || '',
         email: memberdata.contact?.email || '',
@@ -53,265 +59,207 @@ const ViewMemberDetails = () => {
         memberId: memberdata.membershipDetails?.memberid || '',
         fellowYear: memberdata.membershipDetails?.fellowDetails?.fellowYear || '',
         qualifications: memberdata.qualifications || [],
-        experiences: memberdata.experiences || []
+        experiences: memberdata.experiences || [],
+        dateOfBirth: memberdata.dateOfBirth || '',
+        fatherOrHusbandName: memberdata.fatherOrHusbandName || '',
+        utrNumber: memberdata.utrNumber || '',
       });
     }
   }, [memberdata]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleQualificationChange = (index, field, value) => {
-    const newQualifications = [...formData.qualifications];
-    newQualifications[index][field] = value;
-    setFormData({ ...formData, qualifications: newQualifications });
-  };
-
-  const handleExperienceChange = (index, field, value) => {
-    const newExperiences = [...formData.experiences];
-    newExperiences[index][field] = value;
-    setFormData({ ...formData, experiences: newExperiences });
-  };
-
-  const addQualification = () => {
-    setFormData({
-      ...formData,
-      qualifications: [...formData.qualifications, { degree: '', university: '', year: '' }]
-    });
-  };
-
-  const addExperience = () => {
-    setFormData({
-      ...formData,
-      experiences: [...formData.experiences, { designation: '', institution: '', period: '' }]
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Submitted Form Data:', formData);
-  };
 
   if (isLoading) return <CircularProgress />;
   if (isError) return <Typography>Error loading data</Typography>;
 
   return (
-    <MainCard title="View Form">
-      <Box component="form" noValidate sx={{ padding: 2 }} onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          {/* Basic Information */}
-          <Grid item xs={12} sm={6}>
-            <TextField label="First Name" fullWidth required name="firstName" value={formData.firstName} onChange={handleInputChange} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField label="Last Name" fullWidth required name="lastName" value={formData.lastName} onChange={handleInputChange} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Date of Birth"
-              type="date"
-              fullWidth
-              InputLabelProps={{ shrink: true }}
-              required
-              name="dateOfBirth"
-              value={formData.dateOfBirth}
-              onChange={handleInputChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth required>
-              <InputLabel>Gender</InputLabel>
-              <Select name="gender" value={formData.gender} onChange={handleInputChange}>
-                <MenuItem value="Male">Male</MenuItem>
-                <MenuItem value="Female">Female</MenuItem>
-                
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Name of Father/Husband"
-              fullWidth
-              name="fatherOrHusbandName"
-              value={formData.fatherOrHusbandName}
-              onChange={handleInputChange}
-            />
-          </Grid>
-         
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="State "
-              fullWidth
-              required
-              name="State Address"
-              value={formData.stateAddress}
-              onChange={handleInputChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="City Address"
-              fullWidth
-              required
-              name="cityAddress"
-              value={formData.cityAddress}
-              onChange={handleInputChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField label="Street Address" fullWidth name="streetAddress" value={formData.streetAddress} onChange={handleInputChange} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField label="Pin Code" fullWidth name="Pin Code" value={formData.pinCode} onChange={handleInputChange} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField label="Landline No" fullWidth name="landlineNo" value={formData.landlineNo} onChange={handleInputChange} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField label="Mobile No" fullWidth required name="mobileNo" value={formData.mobileNo} onChange={handleInputChange} />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField label="Email" type="email" fullWidth required name="email" value={formData.email} onChange={handleInputChange} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField label="State Branch" fullWidth name="stateBranch" value={formData.stateBranch} onChange={handleInputChange} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Local Branch"
-              fullWidth
-              required
-              name="localBranch"
-              value={formData.localBranch}
-              onChange={handleInputChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField label="UTR Number" fullWidth required name="utrNumber" value={formData.utrNumber} onChange={handleInputChange} />
-          </Grid>
-        </Grid>
+    <MainCard title="View Member Details">
+      <TableContainer component={Paper} sx={{ marginTop: 2, backgroundColor: '#f9f9f9' }}>
+        <Table>
+          <TableBody>
+            {/* Basic Information */}
+            <TableRow sx={{ backgroundColor: '#E5E5E5' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '18px', backgroundColor: '#35b181', color: 'white' }}>
+                First Name
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.firstName}</TableCell>
+            </TableRow>
+            <TableRow sx={{ backgroundColor: '#f2f2f2' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>
+                Last Name
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.lastName}</TableCell>
+            </TableRow>
+            <TableRow sx={{ backgroundColor: '#e5e5e5' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>
+                Gender
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.gender}</TableCell>
+            </TableRow>
+            <TableRow sx={{ backgroundColor: '#f2f2f2' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>
+                Date of Birth
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.dateOfBirth}</TableCell>
+            </TableRow>
+            <TableRow sx={{ backgroundColor: '#E5E5E5' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>
+                Father/Husband Name
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.faE5E5E5therOrHusbandName}</TableCell>
+            </TableRow>
 
-        {/* Qualifications Section */}
-        <Box sx={{ mt: 4 , marginTop:"50px" }}>
-          <Typography variant="h4" gutterBottom>
-            Qualifications
-          </Typography>
-          {formData.qualifications.map((qualification, index) => (
-            <Grid container spacing={2} key={index} sx={{ mb: 1 }}>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  label="Degree/Diploma"
-                  fullWidth
-                  value={qualification.degree}
-                  onChange={(e) => handleQualificationChange(index, 'degree', e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  label="University/Institution"
-                  fullWidth
-                  value={qualification.university}
-                  onChange={(e) => handleQualificationChange(index, 'university', e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  label="Year Obtained"
-                  fullWidth
-                  value={qualification.year}
-                  onChange={(e) => handleQualificationChange(index, 'year', e.target.value)}
-                />
-              </Grid>
-            </Grid>
-          ))}
-          
-        </Box>
+            {/* Address */}
+            <TableRow sx={{ backgroundColor: '#f2f2f2' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>
+                Street Address
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.streetAddress}</TableCell>
+            </TableRow>
+            <TableRow sx={{ backgroundColor: '#E5E5E5' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>
+                City
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.cityAddress}</TableCell>
+            </TableRow>
+            <TableRow sx={{ backgroundColor: '#f2f2f2' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>
+                State
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.stateAddress}</TableCell>
+            </TableRow>
+            <TableRow sx={{ backgroundColor: '#E5E5E5' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>
+                Pin Code
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.pinCode}</TableCell>
+            </TableRow>
 
-        {/* Experience Section */}
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="h4" gutterBottom>
-            Experience
-          </Typography>
-          {formData.experiences.map((experience, index) => (
-            <Grid container spacing={2} key={index} sx={{ mb: 1 }}>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  label="Designation"
-                  fullWidth
-                  value={experience.designation}
-                  onChange={(e) => handleExperienceChange(index, 'designation', e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  label="Institution"
-                  fullWidth
-                  value={experience.institution}
-                  onChange={(e) => handleExperienceChange(index, 'institution', e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  label="Period (From-To)"
-                  fullWidth
-                  value={experience.period}
-                  onChange={(e) => handleExperienceChange(index, 'period', e.target.value)}
-                />
-              </Grid>
-            </Grid>
-          ))}
-             </Box>
-             <Box sx={{ mt: 4 , marginTop:"50px"}}>
-        <Typography variant="h4" gutterBottom>
-          Personal Details
-        </Typography>
-        <Grid container spacing={4}>
-          <Grid item xs={4} sm={4}>
-            <Typography variant="body1" gutterBottom>
-              View Photo
-            </Typography>
-            <Button
-              variant="contained"
-              component="label"
-            >
-              View Photo
-             
-            </Button>
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <Typography variant="body1" gutterBottom>
-              View Signature
-            </Typography>
-            <Button
-              variant="contained"
-              component="label"
-            >
-              View Signature
-              
-            </Button>
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <Typography variant="body1" gutterBottom>
-              View Documents
-            </Typography>
-            <Button
-              variant="contained"
-              component="label"
-            >
-              View Documents
-             
-            </Button>
-          </Grid>
-        </Grid>
+            {/* Contact Details */}
+            <TableRow sx={{ backgroundColor: '#f2f2f2' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>
+                Landline No
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.landlineNo}</TableCell>
+            </TableRow>
+            <TableRow sx={{ backgroundColor: '#E5E5E5' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>
+                Mobile No
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.mobileNo}</TableCell>
+            </TableRow>
+            <TableRow sx={{ backgroundColor: '#f2f2f2' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>
+                Email
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.email}</TableCell>
+            </TableRow>
+
+            {/* Membership Details */}
+            <TableRow sx={{ backgroundColor: '#E5E5E5' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>
+                State Branch
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.stateBranch}</TableCell>
+            </TableRow>
+            <TableRow sx={{ backgroundColor: '#f2f2f2' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>
+                Local Branch
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.localBranch}</TableCell>
+            </TableRow>
+            <TableRow sx={{ backgroundColor: '#E5E5E5' }}>
+              <TableCell variant="head" sx={{ fontWeight: 'bold', fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>
+                UTR Number
+              </TableCell>
+              <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{formData.utrNumber}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <Box sx={{ marginTop: 4 }}>
+        <Typography variant="h4" gutterBottom>Qualifications</Typography>
+        <TableContainer component={Paper} sx={{ backgroundColor: '#E5E5E5' }}>
+          <Table>
+            <TableBody>
+              {formData.qualifications.map((qualification, index) => (
+                <TableRow key={index}>
+                  <TableCell sx={{ fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>{qualification.degree}</TableCell>
+                  <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{qualification.university}</TableCell>
+                  <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{qualification.year}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Box>
 
-        {/* Submit Button */}
-        <Button type="submit" variant="contained" color="success" fullWidth sx={{ mt: 4 , marginTop:"50px" }}>
-          Update Member
-        </Button>
+      <Box sx={{ marginTop: 4 }}>
+        <Typography variant="h4" gutterBottom>Experience</Typography>
+        <TableContainer component={Paper} sx={{ backgroundColor: '#e8f5e9' }}>
+          <Table>
+            <TableBody>
+              {formData.experiences.map((experience, index) => (
+                <TableRow key={index}>
+                  <TableCell sx={{ fontSize: '16px', backgroundColor: '#35b181', color: 'white' }}>{experience.designation}</TableCell>
+                  <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{experience.institution}</TableCell>
+                  <TableCell sx={{ fontSize: '16px', borderLeft: '1px solid #ccc' }}>{experience.period}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Box>
+      <Box sx={{ marginTop: 4 }}>
+  <Button
+    variant="contained"
+    sx={{
+      backgroundColor: '#00994c',  // Green
+      color: 'white',
+      fontSize: '18px',
+      padding: '12px 24px',
+      marginRight: 2,
+      '&:hover': {
+        backgroundColor: '#45a049',  // Darker Green on hover
+      },
+    }}
+  >
+    Certificate Print
+  </Button>
+
+  <Button
+    variant="contained"
+    sx={{
+      backgroundColor: '#2196F3',  // Blue
+      color: 'white',
+      fontSize: '18px',
+      padding: '12px 24px',
+      marginRight: 2,
+      '&:hover': {
+        backgroundColor: '#1976D2',  // Darker Blue on hover
+      },
+    }}
+  >
+    Reciept Print
+  </Button>
+
+  <Button
+      variant="contained"
+      sx={{
+        backgroundColor: '#ff6666',  // Orange
+        color: 'white',
+        fontSize: '18px',
+        padding: '12px 30px',
+        '&:hover': {
+          backgroundColor: '#ff3333',  // Darker Orange on hover
+        },
+      }}
+      onClick={() => navigate(-1)}  // This will go back to the previous page
+    >
+      Back
+    </Button>
+
+</Box>
+
     </MainCard>
   );
 };

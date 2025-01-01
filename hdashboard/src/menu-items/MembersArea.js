@@ -29,8 +29,8 @@ const MembersArea = {
 
         },
         {
-          id: 'View Members',
-          title: 'View Members',
+          id: 'View / Edit Members',
+          title: ' View / Edit Members',
           type: 'item',
           url: '/view-members',
           breadcrumbs: true

@@ -16,9 +16,12 @@ import {
   Typography,
   Box,
   TablePagination,
+  IconButton
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
@@ -58,22 +61,21 @@ const ViewMembers = () => {
     dispatch(getAllMembers());
   }, [dispatch]);
 
-useEffect(() => {
-  const filtered = allMembers.filter((member) => {
-    const fullName = `${member.firstName || ''} ${member.lastName || ''}`.toLowerCase();
-    const phone = member.contact?.mobile || '';
-    const StateBranch = member.membershipDetails?.stateBranchName || ''; // Ensure membershipDetails is not null or undefined
-    const LocalBranch = member.membershipDetails?.localBranchName || ''; // Ensure membershipDetails is not null or undefined
-    
-    // Check if the fields are present in the member and match the search criteria
-    return fullName.includes(searchName.toLowerCase()) && 
-           phone.includes(searchPhone) && 
-           StateBranch.includes(searchStateBranch.toLowerCase()) && 
-           LocalBranch.includes(searchLocalBranch.toLowerCase());
-  });
-  setFilteredMembers(filtered);
-}, [searchName, searchPhone, searchStateBranch, searchLocalBranch, allMembers]);
+  useEffect(() => {
+    const filtered = allMembers.filter((member) => {
+  const fullName = `${member.firstName || ''} ${member.lastName || ''}`.toLowerCase();
+  const phone = member.contact?.mobile || '';
+  const stateBranch = (member.membershipDetails?.stateBranchName || '').toLowerCase().trim();
+  const localBranch = (member.membershipDetails?.localBranchName || '').toLowerCase().trim();
 
+  return fullName.includes(searchName.toLowerCase().trim()) &&
+         phone.includes(searchPhone.trim()) &&
+         stateBranch.includes(searchStateBranch.toLowerCase().trim()) &&
+         localBranch.includes(searchLocalBranch.toLowerCase().trim());
+});
+
+    setFilteredMembers(filtered);
+  }, [searchName, searchPhone, searchStateBranch, searchLocalBranch, allMembers]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -114,6 +116,10 @@ useEffect(() => {
     navigate(`/view-member/${id}`);
   };
 
+  const handleEditDetails = (id) => {
+    navigate(`/edit-member/${id}`);
+  };
+
   if (isLoading)
     return (
       <Box
@@ -137,7 +143,7 @@ useEffect(() => {
   if (isError) return <Typography color="error">{isError}</Typography>;
 
   return (
-    <Box sx={{  maxWidth: 'auto', margin: '0 auto', width: '100%',marginTop:'-13px' }}>
+    <Box sx={{ maxWidth: 'auto', margin: '0 auto', width: '100%', marginTop: '-13px' }}>
       <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: 1 }}>
         <Paper
           sx={{
@@ -145,7 +151,7 @@ useEffect(() => {
             padding: 3,
             boxShadow: 3,
             backgroundColor: '#f9f9f9',
-            marginBottom:1
+            marginBottom: 1
           }}
         >
           <Typography variant="h3" align="center" gutterBottom sx={{ paddingBottom: 0 }}>
@@ -172,18 +178,16 @@ useEffect(() => {
               />
             </Grid>
             <Grid item xs={6} sm={6} md={4}>
-                        <Button
-                          variant="contained"
-                          size="large"
-                          fullWidth
-                          onClick={handleExportExcel}
-                          sx={{ backgroundColor: "#3579a1", '&:hover': { backgroundColor: '#2d688d' } }}
-                        >
-                          Export to Excel
-                        </Button>
-                      </Grid>
-            
-                    
+              <Button
+                variant="contained"
+                size="large"
+                fullWidth
+                onClick={handleExportExcel}
+                sx={{ backgroundColor: "#3579a1", '&:hover': { backgroundColor: '#2d688d' } }}
+              >
+                Export to Excel
+              </Button>
+            </Grid>
             <Grid item xs={4}>
               <TextField
                 fullWidth
@@ -202,19 +206,18 @@ useEffect(() => {
                 onChange={(e) => setSearchLocalBranch(e.target.value)}
               />
             </Grid>
+            
             <Grid item xs={6} sm={6} md={4}>
-                        <Button
-                          variant="contained"
-                          size="large"
-                          fullWidth
-                          onClick={handleExportPDF}
-                          sx={{ backgroundColor: '#7d4c92', '&:hover': { backgroundColor: '#653b74' } }}
-                        >
-                          Export to PDF
-                        </Button>
-                      </Grid>
-            
-            
+              <Button
+                variant="contained"
+                size="large"
+                fullWidth
+                onClick={handleExportPDF}
+                sx={{ backgroundColor: '#7d4c92', '&:hover': { backgroundColor: '#653b74' } }}
+              >
+                Export to PDF
+              </Button>
+            </Grid>
           </Grid>
         </Paper>
       </Box>
@@ -260,24 +263,18 @@ useEffect(() => {
                           {member.contact?.email || 'N/A'}
                         </StyledTableCell>
                         <StyledTableCell>
-                        <Button
-  variant="contained"
-  onClick={() => handleViewDetails(member._id)}
-  sx={{
-    backgroundColor: '#697586',
-    color: "white",
-    padding: "4px 8px", // Reduced padding for a smaller button
-    fontSize: "12px",   // Smaller font size
-    minWidth: "auto", 
-    marginLeft:"10px",
-    // Remove default min-width
-    '&:hover': {
-      backgroundColor: '#364152',
-    },
-  }}
->
-  View / Edit
-</Button>
+                          <IconButton
+                            color="primary"
+                            onClick={() => handleViewDetails(member._id)}
+                          >
+                            <VisibilityIcon />
+                          </IconButton>
+                          <IconButton
+                            color="secondary"
+                            onClick={() => handleEditDetails(member._id)}
+                          >
+                            <EditIcon />
+                          </IconButton>
                         </StyledTableCell>
                       </StyledTableRow>
                     ))

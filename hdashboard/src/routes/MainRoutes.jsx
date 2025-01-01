@@ -4,6 +4,7 @@ import { lazy } from 'react';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 import ViewMemberDetails from 'views/view-membersDetails';
+import EditMemberDetails from 'views/edit-members';
 // import ViewMemberDetails from 'views/view-members-form';
 
 // dashboard routing
@@ -19,6 +20,8 @@ const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 // sample page routing
 const AddMember = Loadable(lazy(() => import('views/add-member')));
 const ViewMembers = Loadable(lazy(() => import('views/view-members')));
+
+
 const AppliedMembers = Loadable(lazy(() => import('views/members-applied')));
 // const EditMembers = Loadable(lazy(() => import('views/edit-members')));
 const StateViewBranches = Loadable(lazy(() => import('views/state/state-view-branches')));
@@ -29,6 +32,8 @@ const LocalEditMembers = Loadable(lazy(() => import('views/Local/local-edit-memb
 const CreateLocalBranch = Loadable(lazy(() => import('views/Local/create-local-branch')));
 const MemberApplication = Loadable(lazy(() => import('views/view-membersDetails')));
 const AppliedMemberDetails = Loadable(lazy(() => import('views/applied-membersDetails')));
+const Approvals = Loadable(lazy(() => import('views/approvals')));
+
 
 
 // ==============================|| MAIN ROUTING ||============================== //
@@ -64,8 +69,16 @@ const MainRoutes = {
       element: <ViewMemberDetails />
     },
     {
+      path: 'edit-member/:id',
+      element: <EditMemberDetails />
+    },
+    {
       path: 'applied-member/:id',
       element: <AppliedMemberDetails/>
+    },
+    {
+      path: 'approve-member/:id',
+      element: <Approvals/>
     },
 
     {
