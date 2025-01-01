@@ -98,7 +98,7 @@ const ViewMemberDetails = () => {
   if (isError) return <Typography>Error loading data</Typography>;
 
   return (
-    <MainCard title="View Member">
+    <MainCard title="View Form">
       <Box component="form" noValidate sx={{ padding: 2 }} onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           {/* Basic Information */}
@@ -123,7 +123,7 @@ const ViewMemberDetails = () => {
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth required>
               <InputLabel>Gender</InputLabel>
-              <Select name="gender" label="Gender" value={formData.gender} onChange={handleInputChange}>
+              <Select name="gender" value={formData.gender} onChange={handleInputChange}>
                 <MenuItem value="Male">Male</MenuItem>
                 <MenuItem value="Female">Female</MenuItem>
                 
@@ -306,7 +306,6 @@ const ViewMemberDetails = () => {
           </Grid>
         </Grid>
       </Box>
-
 
         {/* Submit Button */}
         <Button type="submit" variant="contained" color="success" fullWidth sx={{ mt: 4 , marginTop:"50px" }}>

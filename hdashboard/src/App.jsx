@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
-
+import AppSnackbar from 'views/AppSnackbar';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
 // import axios from 'axios';
@@ -26,7 +26,8 @@ const App = () => {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themes(customization)}>
-        <ToastContainer />
+      <AppSnackbar />
+        <ToastContainer/>
         <CssBaseline />
         <NavigationScroll>
           <RouterProvider router={router} />

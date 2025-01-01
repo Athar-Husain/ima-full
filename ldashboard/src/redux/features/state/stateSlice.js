@@ -70,7 +70,7 @@ const stateSlice = createSlice({
         state.isSuccess = true;
         state.isLoggedIn = true;
         // state.user = action.payload;
-        toast.success('State Branch Added Successfully');
+        toast.success('State Branch Created Successfully');
         // console.log(action.payload);
       })
       .addCase(addStateBranch.rejected, (state, action) => {
