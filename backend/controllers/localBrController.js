@@ -1,7 +1,9 @@
 import asyncHandler from "express-async-handler";
 import LocalBranch from "../models/localBrModel.js";
 import bcrypt from "bcryptjs";
+
 import jwt from "jsonwebtoken";
+import statebranch from "../models/stateBrModel.js";
 // import statebranch from "../models/stateBrModel";
 
 // Controller to add a local branch
@@ -72,13 +74,15 @@ import jwt from "jsonwebtoken";
 //   }
 // };
 
+// import statebranch from "../models/statebranch"; // Import the statebranch model
+
 const addLocalBranch = async (req, res) => {
   try {
     console.log("local controller add local", req.body);
     const {
       localuserId,
       localbranchName,
-      localbranchCode,
+      localbranchCode, // Getting localbranchCode from the frontend
       email,
       password,
       phone,
@@ -89,7 +93,7 @@ const addLocalBranch = async (req, res) => {
     if (
       !localuserId ||
       !localbranchName ||
-      !localbranchCode ||
+      !localbranchCode || // No need to calculate it, use the one from frontend
       !email ||
       !password ||
       !stateBranch // Make sure stateBranchId is provided
@@ -97,26 +101,25 @@ const addLocalBranch = async (req, res) => {
       return res.status(400).json({ error: "All fields are required." });
     }
 
-    // Check if the local branch already exists by localbranchCode or email
-    const localBranchExists = await LocalBranch.findOne({
-      $or: [{ localbranchCode }, { email }],
-    });
+    // Check if the local branch already exists by email
+    const localBranchExists = await LocalBranch.findOne({ email });
 
     if (localBranchExists) {
       return res.status(400).json({
-        error:
-          "Local branch with this local branch code or email already exists.",
+        error: `Local branch with this ${email} already exists.`,
       });
     }
 
-    // Find the state branch to check how many local branches exist in that state
-    const stateBranchexists = await stateBranch.findById(stateBranch);
+    // Find the state branch to associate the local branch with
+    const stateBranchexists = await statebranch.findById(stateBranch);
     if (!stateBranchexists) {
       return res.status(400).json({ error: "State branch not found." });
     }
 
-    // Calculate the new localbranchCode based on the number of existing local branches
-    const newLocalbranchCode = `${stateBranch.localbranches.length + 1}`;
+    // Ensure localbranches is initialized as an empty array if undefined
+    if (!stateBranchexists.localbranches) {
+      stateBranchexists.localbranches = []; // Initialize as an empty array if not already set
+    }
 
     // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -125,7 +128,7 @@ const addLocalBranch = async (req, res) => {
     const newLocalBranch = new LocalBranch({
       localuserId,
       localbranchName,
-      localbranchCode: newLocalbranchCode, // Set the new generated code
+      localbranchCode, // Use the localbranchCode passed from the frontend
       email,
       password: hashedPassword,
       phone,
@@ -136,22 +139,13 @@ const addLocalBranch = async (req, res) => {
     await newLocalBranch.save();
 
     // Update the state branch by adding this new local branch's ID
-    stateBranch.localbranches.push(newLocalBranch._id);
-    await stateBranch.save();
+    stateBranchexists.localbranches.push(newLocalBranch._id);
+    await stateBranchexists.save();
 
     // Return the response
-    res.status(201).json({
-      message: "Local Branch added successfully.",
-      // localBranch: {
-      //   localuserId: newLocalBranch.localuserId,
-      //   localbranchName: newLocalBranch.localbranchName,
-      //   localbranchCode: newLocalBranch.localbranchCode,
-      //   email: newLocalBranch.email,
-      //   phone: newLocalBranch.phone,
-      // },
-    });
+    res.status(201).json({ message: "Local Branch added successfully." });
   } catch (error) {
-    console.error("Error adding local branch:", error);
+    console.error("Error adding local branch:", error.message);
     res.status(500).json({ error: "Internal Server Error." });
   }
 };
@@ -271,13 +265,24 @@ const getLocalBranches = async (req, res) => {
 
 const getAllLocalBranches = asyncHandler(async (req, res) => {
   try {
-    const localBranches = await LocalBranch.find().populate(
-      "stateBranch",
-      "stateName"
-    );
+    // Fetch all local branches and populate the stateBranch field
+    const localBranches = await LocalBranch.find()
+      .populate("stateBranch", "stateName") // Populate only the 'stateName' field of the stateBranch
+      .sort({
+        createdAt: -1, // Sort by createdAt descending
+        updatedAt: -1, // Sort by updatedAt descending (optional)
+      });
+
+    // Return success response with localBranches data
     res.status(200).json(localBranches);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    // Log the error for debugging
+    console.error("Error fetching local branches:", error);
+
+    // Return a generic error message
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching local branches." });
   }
 });
 

@@ -27,7 +27,7 @@ const Hero = () => {
         <a href="#about" className="btn-get-started">
           Read More
         </a>
-      </div> */}
+      </div> dadadadadad*/}
     </section>
   );
 };

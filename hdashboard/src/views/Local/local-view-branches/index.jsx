@@ -1,5 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box, TextField } from '@mui/material';
+import {
+  Button,
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Box,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl
+} from '@mui/material';
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
@@ -35,19 +50,28 @@ const LocalViewBranches = () => {
   const dispatch = useDispatch();
   const { localBranches, isLocalLoading, isLocalError, localMessage } = useSelector((state) => state.local);
 
-  console.log('localbranches in clg', localBranches);
   const [filterStateName, setFilterStateName] = useState('');
+  const [filterStateBranch, setFilterStateBranch] = useState('');
 
   useEffect(() => {
     dispatch(getAllLocalBranches());
   }, [dispatch]);
 
-  const handleFilterChange = (event) => {
+  const handleStateNameFilterChange = (event) => {
     setFilterStateName(event.target.value);
   };
 
+  const handleStateBranchFilterChange = (event) => {
+    setFilterStateBranch(event.target.value);
+  };
+
+  // Filter logic to handle both filters: stateBranch and localbranchName
   const filterBranches = () => {
-    return localBranches?.filter((branch) => branch.localbranchName?.toLowerCase().includes(filterStateName.toLowerCase()));
+    return localBranches?.filter((branch) => {
+      const matchesStateBranch = filterStateBranch ? branch.stateBranch?.stateName === filterStateBranch : true;
+      const matchesStateName = branch.localbranchName?.toLowerCase().includes(filterStateName.toLowerCase());
+      return matchesStateBranch && matchesStateName;
+    });
   };
 
   const handleExportToExcel = () => {
@@ -79,25 +103,46 @@ const LocalViewBranches = () => {
 
   const filteredBranches = filterBranches();
 
-  // Debugging the response and states
-  // console.log('Local Branches:', localBranches);
-  // console.log('Is Loading:', isLocalLoading);
-  // console.log('Error:', isLocalError);
-
   if (isLocalLoading) return <div>Loading...</div>;
   if (isLocalError) return <div>Error fetching data: {isLocalError}</div>;
+
+  // Create a list of unique stateBranches for the Select dropdown
+  const stateBranchOptions = [...new Set(localBranches?.map((branch) => branch.stateBranch?.stateName))];
 
   return (
     <MainCard title="View Local Branches">
       <Box component="form" noValidate>
         <Grid container spacing={2} alignItems="center">
+          {/* State Branch Filter Dropdown */}
+          <Grid item xs={12} sm={6} md={3}>
+            <FormControl fullWidth>
+              <InputLabel>State Branch</InputLabel>
+              <Select value={filterStateBranch} onChange={handleStateBranchFilterChange} label="State Branch">
+                <MenuItem value="">
+                  <em>All</em>
+                </MenuItem>
+                {stateBranchOptions.map((stateName, index) => (
+                  <MenuItem key={index} value={stateName}>
+                    {stateName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
           {/* Search Field */}
-          <Grid item xs={12} sm={6} md={4}>
-            <TextField label="Search Branch Name" variant="outlined" fullWidth value={filterStateName} onChange={handleFilterChange} />
+          <Grid item xs={12} sm={6} md={3}>
+            <TextField
+              label="Search Local Branch Name"
+              variant="outlined"
+              fullWidth
+              value={filterStateName}
+              onChange={handleStateNameFilterChange}
+            />
           </Grid>
 
           {/* Export Buttons */}
-          <Grid item xs={12} sm={3} md={4}>
+          <Grid item xs={12} sm={3} md={3}>
             <Button
               variant="contained"
               size="large"
@@ -109,7 +154,7 @@ const LocalViewBranches = () => {
             </Button>
           </Grid>
 
-          <Grid item xs={12} sm={3} md={4}>
+          <Grid item xs={12} sm={3} md={3}>
             <Button
               variant="contained"
               size="large"
