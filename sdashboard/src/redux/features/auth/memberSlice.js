@@ -80,7 +80,7 @@ const memberSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.member = action.payload; // Set the registered member
-        toast.success('Member registered successfully');
+        // toast.success('Member registered successfully');
       })
       .addCase(registerMember.rejected, (state, action) => {
         state.isLoading = false;
