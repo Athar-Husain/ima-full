@@ -1,10 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
 import memberService from "./memberService";
 
 const initialState = {
   memberdata: null,
-  selectedMember: null, // Store the selected member for OTP operations
+  selectedMember: null,
   allMembers: [],
   isError: false,
   isSuccess: false,
@@ -13,9 +12,14 @@ const initialState = {
   message: "",
   totalMembers: 0,
   // checkMembers
+  snackbar: {
+    open: false,
+    message: "",
+    severity: "success", // success, error, info, warning
+  },
 };
 
-// Register member (already implemented)
+// Register member
 export const registerMember = createAsyncThunk(
   "member/registerMember",
   async (userData, thunkAPI) => {
@@ -31,7 +35,7 @@ export const registerMember = createAsyncThunk(
   }
 );
 
-// Get all members (already implemented)
+// Get all members
 export const getAllMembers = createAsyncThunk(
   "member/getAllMembers",
   async (_, thunkAPI) => {
@@ -74,10 +78,14 @@ const memberSlice = createSlice({
       state.isSuccess = false;
       state.isLoading = false;
       state.message = "";
-      state.selectedMember = null; // Reset selected member when resetting state
+      state.selectedMember = null;
+      state.snackbar = { open: false, message: "", severity: "success" };
     },
     setSelectedMember(state, action) {
-      state.selectedMember = action.payload; // Store the selected member details
+      state.selectedMember = action.payload;
+    },
+    closeSnackbar(state) {
+      state.snackbar.open = false;
     },
   },
   extraReducers: (builder) => {
@@ -91,17 +99,23 @@ const memberSlice = createSlice({
       .addCase(registerMember.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.member = action.payload; // Set the registered member
-        toast.success("Member registered successfully");
+        state.member = action.payload;
+        state.snackbar = {
+          open: true,
+          message: "Member Application Submitted Successfully",
+          severity: "success",
+        };
       })
       .addCase(registerMember.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         state.member = null;
-        // toast.error(action.payload);
-        toast.error(action.payload);
-        // toast.error(stamessage);
+        state.snackbar = {
+          open: true,
+          message: action.payload,
+          severity: "error",
+        };
       })
 
       // Get All Members
@@ -115,16 +129,25 @@ const memberSlice = createSlice({
         state.isSuccess = true;
         state.allMembers = action.payload;
         state.totalMembers = action.payload.length;
-        toast.success("Successfully fetched members");
+        // toast.success("Successfully fetched members");
+        state.snackbar = {
+          open: true,
+          message: "Successfully fetched members",
+          severity: "success",
+        };
       })
       .addCase(getAllMembers.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        toast.error(action.payload);
+        state.snackbar = {
+          open: true,
+          message: action.payload,
+          severity: "error",
+        };
       })
-      // get member data
 
+      // Get Member Data
       .addCase(getMemberData.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
@@ -133,22 +156,29 @@ const memberSlice = createSlice({
       .addCase(getMemberData.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.isLoggedIn = true;
-        state.memberdata = action.payload;
-        console.log("member data slice ", action.payload);
-        toast.success("Member Details found");
+
+        state.snackbar = {
+          open: true,
+          message: "Member Details found",
+          severity: "success",
+        };
       })
       .addCase(getMemberData.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.memberdata = null;
         state.message = action.payload;
-        toast.error(action.payload);
+        state.snackbar = {
+          open: true,
+          message: action.payload,
+          severity: "error",
+        };
       });
   },
 });
 
-export const { RESET, setSelectedMember } = memberSlice.actions;
+export const { RESET, setSelectedMember, closeSnackbar } = memberSlice.actions;
 export const selectMember = (state) => state.member.member;
-export const selectSelectedMember = (state) => state.member.selectedMember; // Selector for selected member
+export const selectSelectedMember = (state) => state.member.selectedMember;
+export const selectSnackbar = (state) => state.member.snackbar;
 export default memberSlice.reducer;

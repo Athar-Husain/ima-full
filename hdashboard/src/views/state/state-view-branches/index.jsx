@@ -13,30 +13,30 @@ import { getAllStateBranches } from 'redux/features/state/stateSlice';
 // Styled components for table cells and rows
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor:"#365463",
+    backgroundColor: '#365463',
     color: theme.palette.common.white,
-    fontSize: 18,
-
+    fontSize: 18
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
+    fontSize: 14
+  }
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
+    backgroundColor: theme.palette.action.hover
   },
   '&:last-child td, &:last-child th': {
-    border: 0,
-  },
+    border: 0
+  }
 }));
 
 const StateViewBranches = () => {
   const dispatch = useDispatch();
-  const { stateBranches = [], loading, error } = useSelector((state) => state.states);
+  const { stateBranches, loading, error } = useSelector((state) => state.states);
   const [filterStateName, setFilterStateName] = useState('');
 
+  console.log('statebranches  console', stateBranches);
   useEffect(() => {
     dispatch(getAllStateBranches());
   }, [dispatch]);
@@ -46,9 +46,7 @@ const StateViewBranches = () => {
   };
 
   const filterBranches = () => {
-    return stateBranches.filter((branch) =>
-      branch.stateName?.toLowerCase().includes(filterStateName.toLowerCase())
-    );
+    return stateBranches.filter((branch) => branch.stateName?.toLowerCase().includes(filterStateName.toLowerCase()));
   };
 
   const handleExportToExcel = () => {
@@ -56,14 +54,14 @@ const StateViewBranches = () => {
       StateName: branch.stateName,
       StateCode: branch.stateCode,
       Email: branch.email,
-      Mobile: branch.contact.mobile,
+      Mobile: branch.contact.mobile
     }));
     const worksheet = XLSX.utils.json_to_sheet(filteredData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'StateBranches');
     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const blob = new Blob([excelBuffer], {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     });
     saveAs(blob, 'StateBranches.xlsx');
   };
@@ -74,12 +72,7 @@ const StateViewBranches = () => {
     doc.text('State Branches', 14, 15);
     autoTable(doc, {
       head: [['State Name', 'State Code', 'Email', 'Mobile']],
-      body: filteredData.map((branch) => [
-        branch.stateName,
-        branch.stateCode,
-        branch.email,
-        branch.contact.mobile,
-      ]),
+      body: filteredData.map((branch) => [branch.stateName, branch.stateCode, branch.email, branch.contact.mobile])
     });
     doc.save('StateBranches.pdf');
   };
@@ -95,13 +88,7 @@ const StateViewBranches = () => {
         <Grid container spacing={2} alignItems="center">
           {/* Search Field */}
           <Grid item xs={12} sm={6} md={4}>
-            <TextField
-              label="Search State Name"
-              variant="outlined"
-              fullWidth
-              value={filterStateName}
-              onChange={handleFilterChange}
-            />
+            <TextField label="Search State Name" variant="outlined" fullWidth value={filterStateName} onChange={handleFilterChange} />
           </Grid>
 
           {/* Export Buttons */}

@@ -2,12 +2,13 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import errorHandler from "./middlewares/errorMiddleware.js"; // Ensure you include .js
 import bodyParser from "body-parser";
 import ConnectDB from "./db.js"; //
 
+import errorHandler from "./middlewares/errorMiddleware.js"; // Ensure you include .js
 import stateRoute from "./routes/stateBrRoute.js";
 import memberRoute from "./routes/memberRoute.js";
+import localRoute from "./routes/localBrRoute.js";
 import otpRoute from "./routes/otpRoute.js";
 
 // ConnectDB();
@@ -44,7 +45,7 @@ app.use(
 app.use("/api/states", stateRoute);
 app.use("/api/members", memberRoute);
 app.use("/api/otp", otpRoute);
-// app.use("/api/local", localRoute);
+app.use("/api/locals", localRoute);
 
 app.get("/", (req, res) => {
   res.send("<h1>THis is from Server/index.js</h1>");

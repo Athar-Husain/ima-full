@@ -44,8 +44,12 @@ const localbranchSchema = mongoose.Schema(
       // enum: ['state', 'local'],
       default: "localbranch",
     },
+    stateBranch: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "statebranch",
+    },
     //  ember ID storing in the local Chapter
-    mobjid: [
+    members: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "member",

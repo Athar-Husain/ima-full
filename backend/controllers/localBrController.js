@@ -1,15 +1,80 @@
-const LocalBranch = require("../models/localBrModel"); // Adjust the path as needed
-// const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
-
-import bcrypt from "bcryptjs";
 import asyncHandler from "express-async-handler";
+import LocalBranch from "../models/localBrModel.js";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 // import statebranch from "../models/stateBrModel";
 
 // Controller to add a local branch
+// const addLocalBranch = async (req, res) => {
+//   try {
+//     const {
+//       localuserId,
+//       localbranchName,
+//       localbranchCode,
+//       email,
+//       password,
+//       phone,
+//     } = req.body;
+
+//     // Check if all required fields are provided
+//     if (
+//       !localuserId ||
+//       !localbranchName ||
+//       !localbranchCode ||
+//       !email ||
+//       !password
+//     ) {
+//       return res.status(400).json({ error: "All fields are required." });
+//     }
+
+//     // Check if the local branch already exists by localbranchCode or email
+//     const localBranchExists = await LocalBranch.findOne({
+//       $or: [{ localbranchCode }, { email }],
+//     });
+
+//     if (localBranchExists) {
+//       return res.status(400).json({
+//         error:
+//           "Local branch with this local branch code or email already exists.",
+//       });
+//     }
+
+//     // Hash password before saving
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     // Create a new local branch
+//     const newLocalBranch = new LocalBranch({
+//       localuserId,
+//       localbranchName,
+//       localbranchCode,
+//       email,
+//       password: hashedPassword,
+//       phone,
+//     });
+
+//     // Save the new local branch
+//     await newLocalBranch.save();
+
+//     // Return the response
+//     res.status(201).json({
+//       message: "Local Branch added successfully.",
+//       localBranch: {
+//         localuserId: newLocalBranch.localuserId,
+//         localbranchName: newLocalBranch.localbranchName,
+//         localbranchCode: newLocalBranch.localbranchCode,
+//         email: newLocalBranch.email,
+//         phone: newLocalBranch.phone,
+//       },
+//     });
+//   } catch (error) {
+//     console.error("Error adding local branch:", error);
+//     res.status(500).json({ error: "Internal Server Error." });
+//   }
+// };
+
 const addLocalBranch = async (req, res) => {
   try {
+    console.log("local controller add local", req.body);
     const {
       localuserId,
       localbranchName,
@@ -17,6 +82,7 @@ const addLocalBranch = async (req, res) => {
       email,
       password,
       phone,
+      stateBranch, // Added stateBranch to associate with state
     } = req.body;
 
     // Check if all required fields are provided
@@ -25,7 +91,8 @@ const addLocalBranch = async (req, res) => {
       !localbranchName ||
       !localbranchCode ||
       !email ||
-      !password
+      !password ||
+      !stateBranch // Make sure stateBranchId is provided
     ) {
       return res.status(400).json({ error: "All fields are required." });
     }
@@ -42,32 +109,46 @@ const addLocalBranch = async (req, res) => {
       });
     }
 
-    // Hash password before saving
+    // Find the state branch to check how many local branches exist in that state
+    const stateBranchexists = await stateBranch.findById(stateBranch);
+    if (!stateBranchexists) {
+      return res.status(400).json({ error: "State branch not found." });
+    }
+
+    // Calculate the new localbranchCode based on the number of existing local branches
+    const newLocalbranchCode = `${stateBranch.localbranches.length + 1}`;
+
+    // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new local branch
     const newLocalBranch = new LocalBranch({
       localuserId,
       localbranchName,
-      localbranchCode,
+      localbranchCode: newLocalbranchCode, // Set the new generated code
       email,
       password: hashedPassword,
       phone,
+      stateBranch, // Associate the local branch with the state branch
     });
 
     // Save the new local branch
     await newLocalBranch.save();
 
+    // Update the state branch by adding this new local branch's ID
+    stateBranch.localbranches.push(newLocalBranch._id);
+    await stateBranch.save();
+
     // Return the response
     res.status(201).json({
       message: "Local Branch added successfully.",
-      localBranch: {
-        localuserId: newLocalBranch.localuserId,
-        localbranchName: newLocalBranch.localbranchName,
-        localbranchCode: newLocalBranch.localbranchCode,
-        email: newLocalBranch.email,
-        phone: newLocalBranch.phone,
-      },
+      // localBranch: {
+      //   localuserId: newLocalBranch.localuserId,
+      //   localbranchName: newLocalBranch.localbranchName,
+      //   localbranchCode: newLocalBranch.localbranchCode,
+      //   email: newLocalBranch.email,
+      //   phone: newLocalBranch.phone,
+      // },
     });
   } catch (error) {
     console.error("Error adding local branch:", error);
@@ -190,7 +271,10 @@ const getLocalBranches = async (req, res) => {
 
 const getAllLocalBranches = asyncHandler(async (req, res) => {
   try {
-    const localBranches = LocalBranch.find().sort({ createdAt: -1 });
+    const localBranches = await LocalBranch.find().populate(
+      "stateBranch",
+      "stateName"
+    );
     res.status(200).json(localBranches);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -253,12 +337,11 @@ const loginStatusLocal = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = {
+export {
   addLocalBranch,
   getLocalBranches,
   getLocalBranch,
   loginLocalBranch,
   updateLocalBranch,
   getAllLocalBranches,
-  // loginStatusLocal,
 };

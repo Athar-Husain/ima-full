@@ -56,7 +56,7 @@ const statebranchSchema = mongoose.Schema(
         ref: "localbranch",
       },
     ],
-    mobjid: [
+    members: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "member",

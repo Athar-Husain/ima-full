@@ -1,11 +1,11 @@
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { Snackbar } from '@mui/material';
+import axios from "axios";
+import { toast } from "react-toastify";
+import { Snackbar } from "@mui/material";
 // import { BASE_API_URL } from '../../../Components/Utils';
 // const BASE_API_URL = import.meta.env.BACKEND_URL;
 const BASE_API_URL = import.meta.env.VITE_BACKEND_URL;
 
-const API_URL = `${BASE_API_URL}/api/states/`;
+export const API_URL = `${BASE_API_URL}/api/states/`;
 
 export const validateEmail = (email) => {
   return email.match(
@@ -22,7 +22,7 @@ export const validateEmail = (email) => {
 
 const addStateBranch = async (userData) => {
   try {
-    const response = await axios.post(API_URL + 'addStateBranch', userData);
+    const response = await axios.post(API_URL + "addStateBranch", userData);
     return response.data;
   } catch (error) {
     // toast.error('Error in Add State Branch in Service', error);
@@ -32,43 +32,48 @@ const addStateBranch = async (userData) => {
 
 // // Login User
 const statelogin = async (userData) => {
-  const response = await axios.post(API_URL + 'login', userData);
+  const response = await axios.post(API_URL + "login", userData);
   return response.data;
 };
 
 // // Logout User
 const statelogout = async () => {
-  const response = await axios.get(API_URL + 'statelogout');
+  const response = await axios.get(API_URL + "statelogout");
   return response.data.message;
 };
 
 // // Get Login Status
 const stateloginstatus = async () => {
-  const response = await axios.get(API_URL + 'stateloginstatus');
+  const response = await axios.get(API_URL + "stateloginstatus");
   return response.data;
 };
 
 // // Get user profile
 const getUser = async () => {
   // const response = await axios.get(API_URL + "getUser");
-  const response = await axios.get(API_URL + 'getUser');
+  const response = await axios.get(API_URL + "getUser");
   return response.data;
 };
 
 // Update profile
 const updateStateBranch = async (userData) => {
-  const response = await axios.patch(API_URL + 'updateStateBranch');
+  const response = await axios.patch(API_URL + "updateStateBranch");
   return response.data;
 };
 
 const getAllStateBranches = async () => {
-  const response = await axios.get(API_URL + 'getAllStateBranches');
-  return response.data;
+  try {
+    const response = await axios.get(API_URL + "getAllStateBranches");
+    return response.data;
+  } catch (error) {
+    console.log("getAll States Error", error.message);
+    throw error;
+  }
 };
 
 const stateService = {
   addStateBranch,
-  getAllStateBranches
+  getAllStateBranches,
 };
 
 export default stateService;

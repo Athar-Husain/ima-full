@@ -5,6 +5,7 @@
 
 import asyncHandler from "express-async-handler";
 import StateBranch from "../models/stateBrModel.js";
+import LocalBranch from "../models/localBrModel.js";
 // import stateBrModel from "../models/stateBrModel.js";
 import jwt from "jsonwebtoken";
 // import Token from "../models/tokenModel.js";
@@ -213,7 +214,10 @@ const updateStateBranch = asyncHandler(async (req, res) => {
 
 const getAllStateBranches = asyncHandler(async (req, res) => {
   try {
-    const stateBranches = await StateBranch.find();
+    const stateBranches = await StateBranch.find().populate(
+      "localbranches",
+      "localbranchName"
+    );
     if (stateBranches) {
       res.status(200).json(stateBranches);
     }

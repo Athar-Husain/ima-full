@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client"; // Use createRoot from ReactDOM
 import "./App.css";
-
+import AppSnackbar from "./Components/AppSnackbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -41,8 +41,8 @@ const App = () => {
   // console.log("member", member);
   return (
     <Router>
-      <ToastContainer />
-      <div className="App">
+ <AppSnackbar />
+       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage />} /> {/* Home Page */}
           <Route path="/contact" element={<ContactPage />} />
