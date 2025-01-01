@@ -123,7 +123,7 @@ const ViewMemberDetails = () => {
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth required>
               <InputLabel>Gender</InputLabel>
-              <Select name="gender" value={formData.gender} onChange={handleInputChange}>
+              <Select name="gender" label="Gender" value={formData.gender} onChange={handleInputChange}>
                 <MenuItem value="Male">Male</MenuItem>
                 <MenuItem value="Female">Female</MenuItem>
                 
@@ -306,6 +306,7 @@ const ViewMemberDetails = () => {
           </Grid>
         </Grid>
       </Box>
+
 
         {/* Submit Button */}
         <Button type="submit" variant="contained" color="success" fullWidth sx={{ mt: 4 , marginTop:"50px" }}>

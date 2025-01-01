@@ -124,13 +124,13 @@ const AppliedMemberDetails = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth required>
-              <InputLabel>Gender</InputLabel>
-              <Select name="gender" value={formData.gender} onChange={handleInputChange}>
-                <MenuItem value="Male">Male</MenuItem>
-                <MenuItem value="Female">Female</MenuItem>
-                
-              </Select>
-            </FormControl>
+                        <InputLabel>Gender</InputLabel>
+                        <Select name="gender"  label="Gender"value={formData.gender} onChange={handleInputChange}>
+                          <MenuItem value="Male">Male</MenuItem>
+                          <MenuItem value="Female">Female</MenuItem>
+                          
+                        </Select>
+                      </FormControl>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -326,6 +326,58 @@ const AppliedMemberDetails = () => {
                   </Grid>
                 </Grid>
               </Box>
+
+              <Box sx={{ mt: 4 }}>
+  <Typography variant="h4" gutterBottom sx={{ mb: 2 }}>
+    Approvals
+  </Typography>
+  {formData.experiences.map((experience, index) => (
+    <Grid container spacing={2} key={index} sx={{ mb: 1 }}>
+      <Grid item xs={12} sm={4}>
+        <FormControl fullWidth>
+          <InputLabel>Local Branch Approval</InputLabel>
+          <Select
+          label="Local Branch Approval"
+           
+          >
+            <MenuItem value="approved">Approved</MenuItem>
+            <MenuItem value="pending">Pending</MenuItem>
+            <MenuItem value="rejected">Rejected</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
+
+      <Grid item xs={12} sm={4}>
+        <FormControl fullWidth>
+          <InputLabel>State Branch Approval</InputLabel>
+          <Select
+          label="State Branch Approval"
+           
+          >
+            <MenuItem value="approved">Approved</MenuItem>
+            <MenuItem value="pending">Pending</MenuItem>
+            <MenuItem value="rejected">Rejected</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
+
+      <Grid item xs={12} sm={4}>
+        <FormControl fullWidth>
+          <InputLabel>Headquarter Approval</InputLabel>
+          <Select
+          label="Headquarter Approval"
+         
+          >
+            <MenuItem value="approved">Approved</MenuItem>
+            <MenuItem value="pending">Pending</MenuItem>
+            <MenuItem value="rejected">Rejected</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
+    </Grid>
+  ))}
+</Box>
+
 
         {/* Submit Button */}
         <Button type="submit" variant="contained" color="success" fullWidth sx={{ mt: 4 }}>
