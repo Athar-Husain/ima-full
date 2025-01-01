@@ -1,11 +1,42 @@
 import PureCounter from "@srexi/purecounterjs"; // Default export
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { getAllMembers } from "../redux/features/auth/memberSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const CountSection = () => {
+  const dispatch = useDispatch();
+
+  const { totalMembers, allMembers, isLoading, isError } = useSelector(
+    (state) => state.member
+  );
+
+  // const [usersCount, setUsersCount] = useState(0);
+
+  // useEffect(() => {
+  //   if (!isLoading && !isError && allMembers) {
+  //     setUsersCount(allMembers.length);
+  //   }
+  // }, [isLoading, isError, allMembers]);
+
+  // useEffect(() => {
+  //   // Initialize PureCounter when component mounts
+  //   const purecounter = new PureCounter();
+  // }, []);
+
+  // let UsersCount = allMembers.length();
+
+  // console.log("user count in home page", usersCount);
+
+  useEffect(() => {
+    dispatch(getAllMembers());
+  }, [dispatch]);
+
   useEffect(() => {
     // Initialize PureCounter when component mounts
-    new PureCounter(); 
-  }, []); // Dependency array ensures it runs only once
+    new PureCounter();
+  }, []);
+
+  // Dependency array ensures it runs only once
 
   return (
     <>
@@ -17,7 +48,7 @@ const CountSection = () => {
               <div className="stats-item text-center w-100 h-100">
                 <span
                   data-purecounter-start={0}
-                  data-purecounter-end={3500}
+                  data-purecounter-end={totalMembers}
                   data-purecounter-duration={1}
                   className="purecounter"
                 />

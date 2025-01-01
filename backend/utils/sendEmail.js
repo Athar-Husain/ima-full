@@ -1,6 +1,6 @@
-const nodemailer = require("nodemailer");
-const hbs = require("nodemailer-express-handlebars");
-const path = require("path");
+import nodemailer from "nodemailer";
+import hbs from "nodemailer-express-handlebars";
+import path from "path";
 
 const sendEmail = async (
   subject,
@@ -11,51 +11,51 @@ const sendEmail = async (
   name,
   link
 ) => {
-  // create Email transporter
-  const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: 587,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-    tls: {
-      rejectUnauthorized: false,
-    },
-  });
+  try {
+    // Create Email transporter
+    const transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: 587,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+      tls: {
+        rejectUnauthorized: false, // Use cautiously in production
+      },
+    });
 
-  const handlearOptions = {
-    viewEngine: {
+    // Configure Handlebars
+    const handlebarOptions = {
+      viewEngine: {
+        extName: ".handlebars",
+        partialsDir: path.resolve("./views"),
+        defaultLayout: false,
+      },
+      viewPath: path.resolve("./views"),
       extName: ".handlebars",
-      partialsDir: path.resolve("./views"),
-      defaultLayout: false,
-    },
-    viewPath: path.resolve("./views"),
-    extName: ".handlebars",
-  };
+    };
 
-  transporter.use("compile", hbs(handlearOptions));
+    transporter.use("compile", hbs(handlebarOptions));
 
-  //   options for sending email
-  const options = {
-    from: sent_from,
-    to: send_to,
-    reply_to: reply_to,
-    subject,
-    template,
-    context: {
-      name,
-      link,
-    },
-  };
-  //   send Email
-  transporter.sendMail(options, function (err, info) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(info);
-    }
-  });
+    // Email options
+    const options = {
+      from: sent_from,
+      to: send_to,
+      replyTo: reply_to,
+      subject,
+      template,
+      context: { name, link },
+    };
+
+    // Send email
+    const info = await transporter.sendMail(options);
+    console.log("Email sent successfully:", info.response);
+    return info; // Return info for further handling if needed
+  } catch (error) {
+    console.error("Error sending email:", error);
+    throw error; // Propagate the error for higher-level handling
+  }
 };
 
-module.exports = sendEmail;
+export default sendEmail;

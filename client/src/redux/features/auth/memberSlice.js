@@ -11,6 +11,8 @@ const initialState = {
   isLoading: false,
   isLoggedIn: false,
   message: "",
+  totalMembers: 0,
+  // checkMembers
 };
 
 // Register member (already implemented)
@@ -112,6 +114,7 @@ const memberSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.allMembers = action.payload;
+        state.totalMembers = action.payload.length;
         toast.success("Successfully fetched members");
       })
       .addCase(getAllMembers.rejected, (state, action) => {

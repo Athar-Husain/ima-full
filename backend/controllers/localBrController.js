@@ -3,7 +3,9 @@ const LocalBranch = require("../models/localBrModel"); // Adjust the path as nee
 // const jwt = require("jsonwebtoken");
 
 import bcrypt from "bcryptjs";
+import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
+// import statebranch from "../models/stateBrModel";
 
 // Controller to add a local branch
 const addLocalBranch = async (req, res) => {
@@ -166,23 +168,34 @@ const updateLocalBranch = async (req, res) => {
 const getLocalBranches = async (req, res) => {
   try {
     // Fetch all local branches from the database
-    const localBranches = await LocalBranch.find();
+    const localBranches = await LocalBranch.find({
+      statebranch: req.user._id,
+    }).sort({
+      createdAt: -1,
+      updatedAt: -1,
+    });
 
-    // If no local branches exist
-    if (localBranches.length === 0) {
-      return res.status(404).json({ message: "No local branches found." });
-    }
+    // // If no local branches exist
+    // if (localBranches.length === 0) {
+    //   return res.status(404).json({ message: "No local branches found." });
+    // }
 
     // Return the list of local branches
-    res.status(200).json({
-      message: "Local branches fetched successfully.",
-      localBranches,
-    });
+    res.status(200).json(localBranches);
   } catch (error) {
     console.error("Error fetching local branches:", error);
     res.status(500).json({ error: "Internal Server Error." });
   }
 };
+
+const getAllLocalBranches = asyncHandler(async (req, res) => {
+  try {
+    const localBranches = LocalBranch.find().sort({ createdAt: -1 });
+    res.status(200).json(localBranches);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
 
 // Controller to get a single local branch by localuserId
 const getLocalBranch = async (req, res) => {
@@ -246,5 +259,6 @@ module.exports = {
   getLocalBranch,
   loginLocalBranch,
   updateLocalBranch,
+  getAllLocalBranches,
   // loginStatusLocal,
 };

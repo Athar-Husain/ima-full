@@ -27,7 +27,8 @@ const WhyUs = () => {
                 </p>
                 <div className="text-center">
                   <a href="#" className="more-btn">
-                    <span>Learn More</span> <i className="bi bi-chevron-right" />
+                    <span>Learn More</span>{" "}
+                    <i className="bi bi-chevron-right" />
                   </a>
                 </div>
               </div>
@@ -51,7 +52,11 @@ const WhyUs = () => {
                 {/* End Icon Box 1 */}
 
                 {/* Icon Box 2 */}
-                <div className="col-xl-4" data-aos="fade-up" data-aos-delay={300}>
+                <div
+                  className="col-xl-4"
+                  data-aos="fade-up"
+                  data-aos-delay={300}
+                >
                   <div className="icon-box d-flex flex-column justify-content-center align-items-center">
                     <i className="bi bi-gem" />
                     <h4>Ullamco laboris ladore pan</h4>
@@ -64,7 +69,11 @@ const WhyUs = () => {
                 {/* End Icon Box 2 */}
 
                 {/* Icon Box 3 */}
-                <div className="col-xl-4" data-aos="fade-up" data-aos-delay={400}>
+                <div
+                  className="col-xl-4"
+                  data-aos="fade-up"
+                  data-aos-delay={400}
+                >
                   <div className="icon-box d-flex flex-column justify-content-center align-items-center">
                     <i className="bi bi-inboxes" />
                     <h4>Labore consequatur incidid dolore</h4>
