@@ -7,8 +7,8 @@ const icons = { IconDashboard,IconDeviceDesktop,IconLayout2, IconLayoutGrid, Ico
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const dashboard = {
-  id: 'dashboard',
-  title: 'Dashboard',
+  id: 'headquarter dashboard',
+  title: ' Headquarter Dashboard',
   type: 'group',
   children: [
     {
@@ -27,7 +27,7 @@ const dashboard = {
       id: 'default',
       title: 'Dashboard',
       type: 'item',
-      url: '/dashboard/default',
+      url: '/',
       icon: icons.IconLayoutDashboard,
       breadcrumbs: false
     }

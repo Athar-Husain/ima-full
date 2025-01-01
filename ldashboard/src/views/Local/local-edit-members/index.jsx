@@ -48,7 +48,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const EditMembers = () => {
+const LocalEditMembers = () => {
   const [searchFor, setSearchFor] = useState('');
   const [searchText, setSearchText] = useState('');
   const [selectedBranch, setSelectedBranch] = useState('');
@@ -287,7 +287,7 @@ const EditMembers = () => {
   );
 };
 
-export default EditMembers;
+export default LocalEditMembers;
 
 
 
