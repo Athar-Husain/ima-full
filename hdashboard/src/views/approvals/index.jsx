@@ -22,7 +22,7 @@ const Approvals = () => {
           <Grid item xs={12} sm={4}>
             <FormControl fullWidth>
               <InputLabel>Local Branch Approval</InputLabel>
-              <Select label="Local Branch Approval">
+              <Select label="Local Branch Approval" disabled>
                 <MenuItem value="approved">Approved</MenuItem>
                 <MenuItem value="pending">Pending</MenuItem>
                 <MenuItem value="rejected">Rejected</MenuItem>
@@ -33,7 +33,7 @@ const Approvals = () => {
           <Grid item xs={12} sm={4}>
             <FormControl fullWidth>
               <InputLabel>State Branch Approval</InputLabel>
-              <Select label="State Branch Approval">
+              <Select label="State Branch Approval" disabled>
                 <MenuItem value="approved">Approved</MenuItem>
                 <MenuItem value="pending">Pending</MenuItem>
                 <MenuItem value="rejected">Rejected</MenuItem>

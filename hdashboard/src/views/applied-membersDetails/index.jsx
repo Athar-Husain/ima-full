@@ -30,6 +30,8 @@ const AppliedMemberDetails = () => {
     mappliedDate: '',
     stateBranch: '',
     localBranch: '',
+    speciality:'',
+    specialityCode:'',
     memberId: '',
     fellowYear: '',
     qualifications: [],
@@ -54,6 +56,8 @@ const AppliedMemberDetails = () => {
         localBranch: memberdata.membershipDetails?.localBranchName || '',
         memberId: memberdata.membershipDetails?.memberid || '',
         fellowYear: memberdata.membershipDetails?.fellowDetails?.fellowYear || '',
+        speciality: memberdata.speciality ||'',
+        specialityCode: memberdata.specialityCode ||'',
         qualifications: memberdata.qualifications || [],
         experiences: memberdata.experiences || []
       });
@@ -104,27 +108,27 @@ const AppliedMemberDetails = () => {
       <Box component="form" noValidate sx={{ padding: 2 }} onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           {/* Basic Information */}
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="First Name"
               fullWidth
               required
               name="firstName"
               value={formData.firstName}
-              InputProps={{ readOnly: true }} // Make field read-only
+              InputProps={{ readonly: true }} // Make field read-only
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="Last Name"
               fullWidth
               required
               name="lastName"
               value={formData.lastName}
-              InputProps={{ readOnly: true }} // Make field read-only
+              InputProps={{ readonly: true }} // Make field read-only
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="Date of Birth"
               type="date"
@@ -133,10 +137,10 @@ const AppliedMemberDetails = () => {
               required
               name="dateOfBirth"
               value={formData.dateOfBirth}
-              InputProps={{ readOnly: true }} // Make field read-only
+              InputProps={{ readonly: true }} // Make field read-only
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <FormControl fullWidth required>
               <InputLabel>Gender</InputLabel>
               <Select
@@ -144,71 +148,72 @@ const AppliedMemberDetails = () => {
                 label="Gender"
                 value={formData.gender}
                 onChange={handleInputChange}
-                disabled // Disable the select input
+                readonly // Disable the select input
               >
                 <MenuItem value="Male">Male</MenuItem>
                 <MenuItem value="Female">Female</MenuItem>
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="Name of Father/Husband"
               fullWidth
               name="fatherOrHusbandName"
               value={formData.fatherOrHusbandName}
-              InputProps={{ readOnly: true }} // Make field read-only
+              InputProps={{ readonly: true }} // Make field read-only
             />
           </Grid>
-
-          <Grid item xs={12} sm={6}>
+        
+          <Grid item xs={12} sm={4}>
+            <TextField
+              label="Street Address"
+              fullWidth
+              name="streetAddress"
+              value={formData.streetAddress}
+              InputProps={{ readonly: true }} // Make field read-only
+            />
+          </Grid>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="State"
               fullWidth
               required
               name="State Address"
               value={formData.stateAddress}
-              InputProps={{ readOnly: true }} // Make field read-only
+              InputProps={{ readonly: true }} // Make field read-only
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="City Address"
               fullWidth
               required
               name="cityAddress"
               value={formData.cityAddress}
-              InputProps={{ readOnly: true }} // Make field read-only
+              InputProps={{ readonly: true }} // Make field read-only
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              label="Street Address"
-              fullWidth
-              name="streetAddress"
-              value={formData.streetAddress}
-              InputProps={{ readOnly: true }} // Make field read-only
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+        
+          <Grid item xs={12} sm={4}>
             <TextField
               label="Pin Code"
               fullWidth
               name="Pin Code"
               value={formData.pinCode}
-              InputProps={{ readOnly: true }} // Make field read-only
+              InputProps={{ readonly: true }} // Make field read-only
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="Landline No"
               fullWidth
               name="landlineNo"
               value={formData.landlineNo}
-              InputProps={{ readOnly: true }} // Make field read-only
+              InputProps={{ readonly: true }} // Make field read-only
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="Mobile No"
               fullWidth
@@ -218,7 +223,7 @@ const AppliedMemberDetails = () => {
               InputProps={{ readOnly: true }} // Make field read-only
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={4} >
             <TextField
               label="Email"
               type="email"
@@ -226,39 +231,57 @@ const AppliedMemberDetails = () => {
               required
               name="email"
               value={formData.email}
-              InputProps={{ readOnly: true }} // Make field read-only
+              InputProps={{ readonly: true }} // Make field read-only
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="State Branch"
               fullWidth
               name="stateBranch"
               value={formData.stateBranch}
-              InputProps={{ readOnly: true }} // Make field read-only
+              InputProps={{ readonly: true }} // Make field read-only
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="Local Branch"
               fullWidth
               required
               name="localBranch"
               value={formData.localBranch}
-              InputProps={{ readOnly: true }} // Make field read-only
+              InputProps={{ readonly: true }} // Make field read-only
             />
           </Grid>
-
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="UTR Number"
               fullWidth
               name="utrNumber"
               value={formData.utrNumber}
-              InputProps={{ readOnly: true }} // Make field read-only
+              InputProps={{ readonly: true }} // Make field read-only
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              label="Speciality"
+              fullWidth
+              name="Speciality"
+              value={formData.speciality}
+              InputProps={{ readonly: true }} // Make field read-only
+            />
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              label="Speciality Code"
+              fullWidth
+              name="Speciality Code"
+              value={formData.specialityCode}
+              InputProps={{ readonly: true }} // Make field read-only
+            />
+          </Grid>
+
+                    <Grid item xs={12} sm={4}>
             <TextField
               name="mappliedDate"
               label="Membership Applied Date"
@@ -266,13 +289,13 @@ const AppliedMemberDetails = () => {
               fullWidth
               variant="outlined"
               value={formData.mappliedDate}
-              InputProps={{ readOnly: true }} // Make field read-only
+              InputProps={{ readonly: true }} // Make field read-only
             />
           </Grid>
         </Grid>
 
         {/* Qualifications Section */}
-        <Box sx={{ mt: 5 }}>
+        <Box sx={{ mt: 3 }}>
           <Typography variant="h4" gutterBottom sx={{ mb: 2 }}>
             Qualifications
           </Typography>
@@ -283,7 +306,7 @@ const AppliedMemberDetails = () => {
                   label="Degree/Diploma"
                   fullWidth
                   value={qualification.degree}
-                  InputProps={{ readOnly: true }} // Make field read-only
+                  InputProps={{ readonly: true }} // Make field read-only
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
@@ -291,7 +314,7 @@ const AppliedMemberDetails = () => {
                   label="University/Institution"
                   fullWidth
                   value={qualification.university}
-                  InputProps={{ readOnly: true }} // Make field read-only
+                  InputProps={{ readonly: true }} // Make field read-only
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
@@ -299,7 +322,7 @@ const AppliedMemberDetails = () => {
                   label="Year Obtained"
                   fullWidth
                   value={qualification.year}
-                  InputProps={{ readOnly: true }} // Make field read-only
+                  InputProps={{ readonly: true }} // Make field read-only
                 />
               </Grid>
             </Grid>
@@ -307,7 +330,7 @@ const AppliedMemberDetails = () => {
         </Box>
 
         {/* Experience Section */}
-        <Box sx={{ mt: 5 }}>
+        <Box sx={{ mt: 3 }}>
           <Typography variant="h4" gutterBottom sx={{ mb: 2 }}>
             Experience
           </Typography>
@@ -318,7 +341,7 @@ const AppliedMemberDetails = () => {
                   label="Designation"
                   fullWidth
                   value={experience.designation}
-                  InputProps={{ readOnly: true }} // Make field read-only
+                  InputProps={{ readonly: true }} // Make field read-only
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
@@ -326,7 +349,7 @@ const AppliedMemberDetails = () => {
                   label="Institution"
                   fullWidth
                   value={experience.institution}
-                  InputProps={{ readOnly: true }} // Make field read-only
+                  InputProps={{ readonly: true }} // Make field read-only
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
@@ -334,20 +357,20 @@ const AppliedMemberDetails = () => {
                   label="Period (From-To)"
                   fullWidth
                   value={experience.period}
-                  InputProps={{ readOnly: true }} // Make field read-only
+                  InputProps={{ readonly: true }} // Make field read-only
                 />
               </Grid>
             </Grid>
           ))}
         </Box>
 
-        <Box sx={{ mt: 5 }}>
-  <Typography variant="h4" gutterBottom>
+        <Box sx={{ mt: 3, px: 0 }}>
+  <Typography variant="h4" mb={2} gutterBottom>
     Personal Details
   </Typography>
-  <Grid container spacing={4} mt={-3}>
+  <Grid container spacing={4} justifyContent="center" alignItems="center">
     {/* Member Photo Section */}
-    <Grid item xs={4} sm={4} sx={{ textAlign: 'center' }}>
+    <Grid item xs={12} sm={4} sx={{ textAlign: 'center' }}>
       <Typography variant="body1" gutterBottom>
         Member Photo
       </Typography>
@@ -357,39 +380,38 @@ const AppliedMemberDetails = () => {
           padding: '10px',
           borderRadius: '8px',
           overflow: 'hidden',
-          display: 'inline-block',
-          width: '150px', // Ensuring the box has a consistent width
-          height: '150px', // Ensuring the box has a consistent height
+          width: '150px',
+          height: '150px',
+          margin: '0 auto',
         }}
       >
         <img
-          src={formData.memberPhoto || 'placeholder.jpg'} // Replace with actual photo URL
+          src={formData.memberPhoto || 'placeholder.jpg'}
           alt="Member Photo"
           style={{
-            width: '100%', // Ensure the image fills the box
-            height: '100%', // Ensure the image fills the box
-            objectFit: 'cover', // Crop the image to fill the space
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
             borderRadius: '8px',
           }}
         />
-        <Box sx={{ marginTop: '10px' }}>
-          <Button
-            variant="contained"
-            onClick={() => {
-              const link = document.createElement('a');
-              link.href = formData.memberPhoto || 'placeholder.jpg';
-              link.download = 'member_photo.jpg';
-              link.click();
-            }}
-          >
-            Download Photo
-          </Button>
-        </Box>
       </Box>
+      <Button
+        variant="contained"
+        sx={{ marginTop: '10px' }}
+        onClick={() => {
+          const link = document.createElement('a');
+          link.href = formData.memberPhoto || 'placeholder.jpg';
+          link.download = 'member_photo.jpg';
+          link.click();
+        }}
+      >
+        Download Photo
+      </Button>
     </Grid>
 
     {/* Member Signature Section */}
-    <Grid item xs={4} sm={4} sx={{ textAlign: 'center' }}>
+    <Grid item xs={12} sm={4} sx={{ textAlign: 'center' }}>
       <Typography variant="body1" gutterBottom>
         Member Signature
       </Typography>
@@ -399,85 +421,81 @@ const AppliedMemberDetails = () => {
           padding: '10px',
           borderRadius: '8px',
           overflow: 'hidden',
-          display: 'inline-block',
-          width: '150px', // Ensuring the box has a consistent width
-          height: '150px', // Ensuring the box has a consistent height
+          width: '150px',
+          height: '150px',
+          margin: '0 auto',
         }}
       >
         <img
-          src={formData.memberSignature || 'placeholder-signature.jpg'} // Replace with actual signature image URL
+          src={formData.memberSignature || 'placeholder-signature.jpg'}
           alt="Member Signature"
           style={{
-            width: '100%', // Ensure the image fills the box
-            height: '100%', // Ensure the image fills the box
-            objectFit: 'contain', // Adjust image to fit inside the box without cropping
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
           }}
         />
-        <Box sx={{ marginTop: '10px' }}>
-          <Button
-            variant="contained"
-            onClick={() => {
-              const link = document.createElement('a');
-              link.href = formData.memberSignature || 'placeholder-signature.jpg';
-              link.download = 'member_signature.jpg';
-              link.click();
-            }}
-          >
-            Download Signature
-          </Button>
-        </Box>
       </Box>
+      <Button
+        variant="contained"
+        sx={{ marginTop: '10px' }}
+        onClick={() => {
+          const link = document.createElement('a');
+          link.href = formData.memberSignature || 'placeholder-signature.jpg';
+          link.download = 'member_signature.jpg';
+          link.click();
+        }}
+      >
+        Download Signature
+      </Button>
     </Grid>
 
-    {/* Documents Section */}
-    
-    <Grid item xs={4} sm={4} sx={{ textAlign: 'center' }}>
-  <Typography variant="body1" gutterBottom>
-    Member Documents
-  </Typography>
-  <Box
-    sx={{
-      border: '2px solid #ccc',
-      padding: '10px',
-      borderRadius: '8px',
-      overflow: 'hidden',
-      display: 'inline-block',
-      width: '150px', // Ensuring the box has a consistent width
-      height: '150px', // Ensuring the box has a consistent height
-      backgroundColor: '#f5f5f5',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
-  >
-    {/* Document Preview (e.g., Placeholder or Icon for non-image files like PDF) */}
-    <img
-      src={formData.memberDocument ? 'document-icon.png' : 'placeholder-doc.jpg'} // Display a document icon or placeholder image
-      alt="Document Preview"
-      style={{
-        width: '100%', // Ensure the icon/image fills the box
-        height: '100%', // Ensure the icon/image fills the box
-        objectFit: 'contain', // Adjust to fit inside without cropping
-      }}
-    />
-  </Box>
-  <Box sx={{ marginTop: '10px' }}>
-    <Button
-      variant="contained"
-      onClick={() => {
-        const link = document.createElement('a');
-        link.href = formData.memberDocument || 'placeholder-doc.jpg'; // Use actual document URL
-        link.download = 'member_document.pdf'; // Change extension based on actual document type
-        link.click();
-      }}
-    >
-      Download Document
-    </Button>
-  </Box>
-</Grid>
-
+    {/* Member Documents Section */}
+    <Grid item xs={12} sm={4} sx={{ textAlign: 'center' }}>
+      <Typography variant="body1" gutterBottom>
+        Member Documents
+      </Typography>
+      <Box
+        sx={{
+          border: '2px solid #ccc',
+          padding: '10px',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          width: '150px',
+          height: '150px',
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#f5f5f5',
+        }}
+      >
+        <img
+          src={formData.memberDocument ? 'document-icon.png' : 'placeholder-doc.jpg'}
+          alt="Document Preview"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+          }}
+        />
+      </Box>
+      <Button
+        variant="contained"
+        sx={{ marginTop: '10px' }}
+        onClick={() => {
+          const link = document.createElement('a');
+          link.href = formData.memberDocument || 'placeholder-doc.jpg';
+          link.download = 'member_document.pdf';
+          link.click();
+        }}
+      >
+        Download Document
+      </Button>
+    </Grid>
   </Grid>
 </Box>
+
 
       </Box>
     </MainCard>

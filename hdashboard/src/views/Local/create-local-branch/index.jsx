@@ -11,13 +11,17 @@ import {
   FormHelperText,
   InputLabel,
   FormControl,
+  InputAdornment,
   Select,
+  IconButton,
   Card,
   CardContent
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllStateBranches } from '../../../redux/features/state/stateSlice';
 import { addLocalBranch } from 'redux/features/local/localSlice';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+
 
 const CreateLocalBranch = () => {
   const dispatch = useDispatch();
@@ -25,6 +29,8 @@ const CreateLocalBranch = () => {
   const [selectedState, setSelectedState] = useState('');
   const [cities, setCities] = useState([]);
   const [branchCount, setBranchCount] = useState(0); // To store the count of local branches in selected state
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+
 
   // Fetch all state branches once
   useEffect(() => {
@@ -130,9 +136,14 @@ const CreateLocalBranch = () => {
     setCities(fetchedCities);
   };
 
+  
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 3 }}>
-      <Card sx={{ width: '100%', maxWidth: 600 }}>
+      <Card sx={{ width: '100%', maxWidth: 'auto' }}>
         <CardContent>
           <Typography variant="h2" component="h3" align="center" marginBottom="20px">
             Create Local Branch
@@ -225,11 +236,20 @@ const CreateLocalBranch = () => {
                     <TextField
                       {...field}
                       label="Password"
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       variant="outlined"
                       fullWidth
                       error={!!errors.password}
                       helperText={errors.password?.message}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={togglePasswordVisibility} edge="end">
+                              {showPassword ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                      }}
                     />
                   )}
                 />
@@ -261,9 +281,9 @@ const CreateLocalBranch = () => {
                   variant="contained"
                   size="large"
                   fullWidth
-                  sx={{ backgroundColor: '#35b181', '&:hover': { backgroundColor: '#27a059' } }}
+                  sx={{ backgroundColor: '#35b181',fontSize:'18px', '&:hover': { backgroundColor: '#27a059' } }}
                 >
-                  Submit
+                  Create
                 </Button>
               </Grid>
             </Grid>

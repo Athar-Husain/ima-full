@@ -36,14 +36,7 @@ const StateArea = {
           breadcrumbs: true
 
         },
-        {
-          id: 'Edit Branches',
-          title: 'Edit State Branches',
-          type: 'item',
-          url: '/state/edit-members',
-          breadcrumbs: true
-
-        },
+      
      
       ]
     }

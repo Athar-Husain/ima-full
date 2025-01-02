@@ -102,13 +102,13 @@ const EditMemberDetails = () => {
       <Box component="form" noValidate sx={{ padding: 2 }} onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           {/* Basic Information */}
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField label="First Name" fullWidth required name="firstName" value={formData.firstName} onChange={handleInputChange} />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField label="Last Name" fullWidth required name="lastName" value={formData.lastName} onChange={handleInputChange} />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="Date of Birth"
               type="date"
@@ -120,17 +120,17 @@ const EditMemberDetails = () => {
               onChange={handleInputChange}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <FormControl fullWidth required>
-              <InputLabel>Gender</InputLabel>
-              <Select name="gender" value={formData.gender} onChange={handleInputChange}>
+              <InputLabel >Gender</InputLabel>
+              <Select  label='gender'name="gender" value={formData.gender} onChange={handleInputChange}>
                 <MenuItem value="Male">Male</MenuItem>
                 <MenuItem value="Female">Female</MenuItem>
                 
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="Name of Father/Husband"
               fullWidth
@@ -140,7 +140,7 @@ const EditMemberDetails = () => {
             />
           </Grid>
          
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="State "
               fullWidth
@@ -150,7 +150,7 @@ const EditMemberDetails = () => {
               onChange={handleInputChange}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="City Address"
               fullWidth
@@ -160,25 +160,25 @@ const EditMemberDetails = () => {
               onChange={handleInputChange}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField label="Street Address" fullWidth name="streetAddress" value={formData.streetAddress} onChange={handleInputChange} />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField label="Pin Code" fullWidth name="Pin Code" value={formData.pinCode} onChange={handleInputChange} />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField label="Landline No" fullWidth name="landlineNo" value={formData.landlineNo} onChange={handleInputChange} />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField label="Mobile No" fullWidth required name="mobileNo" value={formData.mobileNo} onChange={handleInputChange} />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={4}>
             <TextField label="Email" type="email" fullWidth required name="email" value={formData.email} onChange={handleInputChange} />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField label="State Branch" fullWidth name="stateBranch" value={formData.stateBranch} onChange={handleInputChange} />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="Local Branch"
               fullWidth
@@ -188,7 +188,7 @@ const EditMemberDetails = () => {
               onChange={handleInputChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={4}>
             <TextField label="UTR Number" fullWidth required name="utrNumber" value={formData.utrNumber} onChange={handleInputChange} />
           </Grid>
         </Grid>
@@ -263,55 +263,139 @@ const EditMemberDetails = () => {
             </Grid>
           ))}
              </Box>
-             <Box sx={{ mt: 4 , marginTop:"50px"}}>
-        <Typography variant="h4" gutterBottom>
-          Personal Details
-        </Typography>
-        <Grid container spacing={4}>
-          <Grid item xs={4} sm={4}>
-            <Typography variant="body1" gutterBottom>
-              View Photo
-            </Typography>
-            <Button
-              variant="contained"
-              component="label"
-            >
-              View Photo
-             
-            </Button>
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <Typography variant="body1" gutterBottom>
-              View Signature
-            </Typography>
-            <Button
-              variant="contained"
-              component="label"
-            >
-              View Signature
-              
-            </Button>
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <Typography variant="body1" gutterBottom>
-              View Documents
-            </Typography>
-            <Button
-              variant="contained"
-              component="label"
-            >
-              View Documents
-             
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
-
-        {/* Submit Button */}
-        <Button type="submit" variant="contained" color="success" fullWidth sx={{ mt: 4 , marginTop:"50px" }}>
-          Update Member
-        </Button>
-      </Box>
+            
+            <Box sx={{ mt: 3, px: 0 }}>
+              <Typography variant="h4" mb={2} gutterBottom>
+                Personal Details
+              </Typography>
+              <Grid container spacing={4} justifyContent="center" alignItems="center">
+                {/* Member Photo Section */}
+                <Grid item xs={12} sm={4} sx={{ textAlign: 'center' }}>
+                  <Typography variant="body1" gutterBottom>
+                    Member Photo
+                  </Typography>
+                  <Box
+                    sx={{
+                      border: '2px solid #ccc',
+                      padding: '10px',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      width: '150px',
+                      height: '150px',
+                      margin: '0 auto',
+                    }}
+                  >
+                    <img
+                      src={formData.memberPhoto || 'placeholder.jpg'}
+                      alt="Member Photo"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        borderRadius: '8px',
+                      }}
+                    />
+                  </Box>
+                  <Button
+                    variant="contained"
+                    sx={{ marginTop: '10px' }}
+                    onClick={() => {
+                      const link = document.createElement('a');
+                      link.href = formData.memberPhoto || 'placeholder.jpg';
+                      link.download = 'member_photo.jpg';
+                      link.click();
+                    }}
+                  >
+                    Download Photo
+                  </Button>
+                </Grid>
+            
+                {/* Member Signature Section */}
+                <Grid item xs={12} sm={4} sx={{ textAlign: 'center' }}>
+                  <Typography variant="body1" gutterBottom>
+                    Member Signature
+                  </Typography>
+                  <Box
+                    sx={{
+                      border: '2px solid #ccc',
+                      padding: '10px',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      width: '150px',
+                      height: '150px',
+                      margin: '0 auto',
+                    }}
+                  >
+                    <img
+                      src={formData.memberSignature || 'placeholder-signature.jpg'}
+                      alt="Member Signature"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                      }}
+                    />
+                  </Box>
+                  <Button
+                    variant="contained"
+                    sx={{ marginTop: '10px' }}
+                    onClick={() => {
+                      const link = document.createElement('a');
+                      link.href = formData.memberSignature || 'placeholder-signature.jpg';
+                      link.download = 'member_signature.jpg';
+                      link.click();
+                    }}
+                  >
+                    Download Signature
+                  </Button>
+                </Grid>
+            
+                {/* Member Documents Section */}
+                <Grid item xs={12} sm={4} sx={{ textAlign: 'center' }}>
+                  <Typography variant="body1" gutterBottom>
+                    Member Documents
+                  </Typography>
+                  <Box
+                    sx={{
+                      border: '2px solid #ccc',
+                      padding: '10px',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      width: '150px',
+                      height: '150px',
+                      margin: '0 auto',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#f5f5f5',
+                    }}
+                  >
+                    <img
+                      src={formData.memberDocument ? 'document-icon.png' : 'placeholder-doc.jpg'}
+                      alt="Document Preview"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                      }}
+                    />
+                  </Box>
+                  <Button
+                    variant="contained"
+                    sx={{ marginTop: '10px' }}
+                    onClick={() => {
+                      const link = document.createElement('a');
+                      link.href = formData.memberDocument || 'placeholder-doc.jpg';
+                      link.download = 'member_document.pdf';
+                      link.click();
+                    }}
+                  >
+                    Download Document
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+                  </Box>
     </MainCard>
   );
 };

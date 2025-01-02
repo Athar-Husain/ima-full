@@ -36,14 +36,7 @@ const LocalArea = {
           breadcrumbs: true
 
         },
-        {
-          id: 'Edit Branches',
-          title: 'Edit Local Branches',
-          type: 'item',
-          url: '/local/edit-members',
-          breadcrumbs: true
-
-        },
+      
     
       ]
     }

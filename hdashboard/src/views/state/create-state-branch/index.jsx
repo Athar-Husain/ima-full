@@ -91,8 +91,8 @@ const CreateStateBranch = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 1 }}>
-      <Card sx={{ width: 'auto', maxWidth: 'auto' }}>
+<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 3 }}>
+      <Card sx={{ width: '100%', maxWidth: 'auto' }}>
         <CardContent>
           <Typography variant="h2" component="h3" align="center" marginBottom="20px" gutterBottom>
             Create State Branch
